@@ -1,0 +1,1261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.9.10 on win32)" generated="20221018 15:42:17.457" rpa="false" schemaversion="3">
+<suite id="s1" name="Test Api" source="C:\Users\abines\Downloads\Abstract API\Tests\Test_Api.robot">
+<test id="s1-t1" name="Validating the API using Post method" line="10">
+<kw name="Create Token Dictionary" library="commonKeywords">
+<var>${Headers}</var>
+<arg>${json_header}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{Header}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20221018 15:42:17.746" level="INFO">&amp;{Header} = { }</msg>
+<status status="PASS" starttime="20221018 15:42:17.746" endtime="20221018 15:42:17.746"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${Headers}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>Content-Type</arg>
+<arg>${Headers}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221018 15:42:17.747" endtime="20221018 15:42:17.747"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:17.747" endtime="20221018 15:42:17.747"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:17.746" endtime="20221018 15:42:17.747"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${token}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>Authorization</arg>
+<arg>Bearer ${TOKEN}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:17.748" endtime="20221018 15:42:17.748"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:17.748" endtime="20221018 15:42:17.748"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:17.747" endtime="20221018 15:42:17.748"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${app_ID}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>app-id</arg>
+<arg>${app_ID}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:17.749" endtime="20221018 15:42:17.749"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:17.749" endtime="20221018 15:42:17.749"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:17.748" endtime="20221018 15:42:17.749"/>
+</if>
+<msg timestamp="20221018 15:42:17.749" level="INFO">${Headers} = {'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20221018 15:42:17.743" endtime="20221018 15:42:17.749"/>
+</kw>
+<kw name="Convert String To Json" library="JSONLibrary">
+<var>${body}</var>
+<arg>${login}</arg>
+<doc>Convert String to JSON object</doc>
+<msg timestamp="20221018 15:42:17.750" level="INFO">${body} = {'email': 'har@gmail.com', 'password': '123450678'}</msg>
+<status status="PASS" starttime="20221018 15:42:17.750" endtime="20221018 15:42:17.750"/>
+</kw>
+<kw name="Validate API calls using different method" library="Request_Library">
+<arg>${BASEURL}</arg>
+<arg>${login_endpoint}</arg>
+<arg>${Post_Method}</arg>
+<arg>${Headers}</arg>
+<arg>${body}</arg>
+<doc>Validate layer implementation using method</doc>
+<kw name="Hit the api and generating the response" library="Request_Library">
+<var>${response}</var>
+<arg>${BASE_URL}</arg>
+<arg>${ENDPOINT}</arg>
+<arg>${Header}</arg>
+<arg>${METHOD}</arg>
+<arg>${body}</arg>
+<arg>${query_param}</arg>
+<arg>${Form_Data}</arg>
+<arg>${file_type}</arg>
+<if>
+<branch type="IF" condition="&quot;${Form_Data}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>${file_type}=${Form_Data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:17.759" endtime="20221018 15:42:17.759"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:17.759" endtime="20221018 15:42:17.759"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${body}&quot; != &quot;${EMPTY}&quot;">
+<try>
+<branch type="TRY">
+<kw name="Evaluate" library="BuiltIn">
+<var>${type}</var>
+<arg>isinstance(${body},dict)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20221018 15:42:17.762" level="INFO">${type} = True</msg>
+<status status="PASS" starttime="20221018 15:42:17.762" endtime="20221018 15:42:17.762"/>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>json=${body}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="POST" library="RequestsLibrary">
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20221018 15:42:20.332" level="INFO">POST Request : url=https://api-nodejs-todolist.herokuapp.com/user/login 
+ path_url=/user/login 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '51'} 
+ body=b'{"email": "har@gmail.com", "password": "123450678"}' 
+ </msg>
+<msg timestamp="20221018 15:42:20.332" level="INFO">POST Response : url=https://api-nodejs-todolist.herokuapp.com/user/login 
+ status=200, reason=OK 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '340', 'Etag': 'W/"154-POGaFO+ZhSwjSDeOQivapO6Rnww"', 'Date': 'Tue, 18 Oct 2022 10:12:20 GMT', 'Via': '1.1 vegur'} 
+ body={"user":{"age":25,"_id":"63451300ceb712001750d718","name":"harsha","email":"har@gmail.com","createdAt":"2022-10-11T06:53:52.922Z","updatedAt":"2022-10-18T10:12:19.519Z","__v":258},"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzQ1MTMwMGNlYjcxMjAwMTc1MGQ3MTgiLCJpYXQiOjE2NjYwODc5Mzl9.UhNJ4eQdfIOyPbBcLLkYhqiyyKw7fKKQ8njQZldUfis"} 
+ </msg>
+<status status="PASS" starttime="20221018 15:42:17.763" endtime="20221018 15:42:20.332"/>
+</kw>
+<msg timestamp="20221018 15:42:20.333" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:17.762" endtime="20221018 15:42:20.333"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:17.761" endtime="20221018 15:42:20.333"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>data=${body}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:20.333" endtime="20221018 15:42:20.333"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:20.333" endtime="20221018 15:42:20.333"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:17.761" endtime="20221018 15:42:20.333"/>
+</try>
+<status status="PASS" starttime="20221018 15:42:17.761" endtime="20221018 15:42:20.333"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:20.334" endtime="20221018 15:42:20.334"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:20.334" endtime="20221018 15:42:20.334"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:17.756" endtime="20221018 15:42:20.334"/>
+</if>
+<msg timestamp="20221018 15:42:20.334" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:17.753" endtime="20221018 15:42:20.334"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20221018 15:42:20.335" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:20.335" endtime="20221018 15:42:20.335"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:17.751" endtime="20221018 15:42:20.336"/>
+</kw>
+<kw name="extracting token" library="Request_Library">
+<arg>extract_token_path=['token']</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${Token}</var>
+<arg>${response.json() ${extract_token_path}}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20221018 15:42:20.340" level="INFO">${Token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzQ1MTMwMGNlYjcxMjAwMTc1MGQ3MTgiLCJpYXQiOjE2NjYwODc5Mzl9.UhNJ4eQdfIOyPbBcLLkYhqiyyKw7fKKQ8njQZldUfis</msg>
+<status status="PASS" starttime="20221018 15:42:20.338" endtime="20221018 15:42:20.340"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${Token}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20221018 15:42:20.340" level="INFO">${Token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzQ1MTMwMGNlYjcxMjAwMTc1MGQ3MTgiLCJpYXQiOjE2NjYwODc5Mzl9.UhNJ4eQdfIOyPbBcLLkYhqiyyKw7fKKQ8njQZldUfis</msg>
+<status status="PASS" starttime="20221018 15:42:20.340" endtime="20221018 15:42:20.341"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:20.337" endtime="20221018 15:42:20.341"/>
+</kw>
+<kw name="Validate status code" library="commonKeywords">
+<arg>${success_status_code}</arg>
+<arg>${success_status_message}</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${expected_status_message}</arg>
+<arg>${response.reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20221018 15:42:20.343" endtime="20221018 15:42:20.345"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${expected_status_code}</var>
+<arg>${status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20221018 15:42:20.346" level="INFO">${expected_status_code} = 200</msg>
+<status status="PASS" starttime="20221018 15:42:20.345" endtime="20221018 15:42:20.346"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${expected_status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:20.346" endtime="20221018 15:42:20.347"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:20.347" endtime="20221018 15:42:20.348"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${expected_status_code}</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20221018 15:42:20.348" endtime="20221018 15:42:20.349"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:20.342" endtime="20221018 15:42:20.349"/>
+</kw>
+<kw name="Validate Header" library="commonKeywords">
+<arg>${json_header}</arg>
+<kw name="Get From Dictionary" library="Collections">
+<var>${content_type}</var>
+<arg>${response.headers}</arg>
+<arg>Content-Type</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20221018 15:42:20.352" level="INFO">${content_type} = application/json; charset=utf-8</msg>
+<status status="PASS" starttime="20221018 15:42:20.351" endtime="20221018 15:42:20.352"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${content_type}</arg>
+<arg>${expected_Content-Type}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20221018 15:42:20.352" endtime="20221018 15:42:20.352"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:20.350" endtime="20221018 15:42:20.352"/>
+</kw>
+<kw name="Verifying response time" library="commonKeywords">
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.elapsed.total_seconds()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:20.353" endtime="20221018 15:42:20.354"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:20.353" endtime="20221018 15:42:20.355"/>
+</kw>
+<kw name="Verifying Schema" library="commonKeywords">
+<arg>${login_schema}</arg>
+<kw name="Load Json From File" library="JSONLibrary">
+<var>${schema}</var>
+<arg>${Expected_Json_Schema}</arg>
+<doc>Load JSON from file.</doc>
+<msg timestamp="20221018 15:42:20.357" level="INFO">${schema} = {'$schema': 'http://json-schema.org/draft-04/schema#', 'type': 'object', 'properties': {'user': {'type': 'object', 'properties': {'age': {'type': 'integer'}, '_id': {'type': 'string'}, 'name': {'type'...</msg>
+<status status="PASS" starttime="20221018 15:42:20.356" endtime="20221018 15:42:20.357"/>
+</kw>
+<kw name="Validate Json By Schema" library="JSONLibrary">
+<arg>${response.json()}</arg>
+<arg>${schema}</arg>
+<doc>Validate json object by json schema.
+Arguments:
+    - json_object: json as a dictionary object.
+    - schema: schema as a dictionary object.</doc>
+<status status="PASS" starttime="20221018 15:42:20.357" endtime="20221018 15:42:20.360"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:20.356" endtime="20221018 15:42:20.361"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:17.743" endtime="20221018 15:42:20.361"/>
+</test>
+<test id="s1-t2" name="Validating the API using Get method" line="20">
+<kw name="Create Token Dictionary" library="commonKeywords">
+<var>${Headers}</var>
+<arg>${json_header}</arg>
+<arg>token=${Token}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{Header}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20221018 15:42:20.365" level="INFO">&amp;{Header} = { }</msg>
+<status status="PASS" starttime="20221018 15:42:20.364" endtime="20221018 15:42:20.365"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${Headers}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>Content-Type</arg>
+<arg>${Headers}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221018 15:42:20.366" endtime="20221018 15:42:20.366"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:20.366" endtime="20221018 15:42:20.366"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:20.365" endtime="20221018 15:42:20.366"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${token}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>Authorization</arg>
+<arg>Bearer ${TOKEN}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221018 15:42:20.367" endtime="20221018 15:42:20.367"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:20.367" endtime="20221018 15:42:20.368"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:20.366" endtime="20221018 15:42:20.368"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${app_ID}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>app-id</arg>
+<arg>${app_ID}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:20.369" endtime="20221018 15:42:20.369"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:20.368" endtime="20221018 15:42:20.369"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:20.368" endtime="20221018 15:42:20.369"/>
+</if>
+<msg timestamp="20221018 15:42:20.369" level="INFO">${Headers} = {'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzQ1MTMwMGNlYjcxMjAwMTc1MGQ3MTgiLCJpYXQiOjE2NjYwODc5Mzl9.UhNJ4eQdfIOyPbBcLLkYhqiyyKw7fKKQ...</msg>
+<status status="PASS" starttime="20221018 15:42:20.363" endtime="20221018 15:42:20.369"/>
+</kw>
+<kw name="Validate API calls using different method" library="Request_Library">
+<arg>${BASEURL}</arg>
+<arg>${user_endpoint}</arg>
+<arg>${Get_Method}</arg>
+<arg>${Headers}</arg>
+<arg>query_param=${query_parameter}</arg>
+<doc>Validate layer implementation using method</doc>
+<kw name="Hit the api and generating the response" library="Request_Library">
+<var>${response}</var>
+<arg>${BASE_URL}</arg>
+<arg>${ENDPOINT}</arg>
+<arg>${Header}</arg>
+<arg>${METHOD}</arg>
+<arg>${body}</arg>
+<arg>${query_param}</arg>
+<arg>${Form_Data}</arg>
+<arg>${file_type}</arg>
+<if>
+<branch type="IF" condition="&quot;${Form_Data}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>${file_type}=${Form_Data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:20.373" endtime="20221018 15:42:20.373"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:20.373" endtime="20221018 15:42:20.373"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${body}&quot; != &quot;${EMPTY}&quot;">
+<try>
+<branch type="TRY">
+<kw name="Evaluate" library="BuiltIn">
+<var>${type}</var>
+<arg>isinstance(${body},dict)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:20.374" endtime="20221018 15:42:20.374"/>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>json=${body}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:20.374" endtime="20221018 15:42:20.374"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:20.374" endtime="20221018 15:42:20.374"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>data=${body}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:20.374" endtime="20221018 15:42:20.374"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:20.374" endtime="20221018 15:42:20.374"/>
+</branch>
+<status status="NOT RUN" starttime="20221018 15:42:20.374" endtime="20221018 15:42:20.374"/>
+</try>
+<status status="NOT RUN" starttime="20221018 15:42:20.374" endtime="20221018 15:42:20.374"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="GET" library="RequestsLibrary">
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<doc>Sends a GET request.</doc>
+<msg timestamp="20221018 15:42:22.377" level="INFO">GET Request : url=https://api-nodejs-todolist.herokuapp.com/task?limit=1&amp;skip=1 
+ path_url=/task?limit=1&amp;skip=1 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzQ1MTMwMGNlYjcxMjAwMTc1MGQ3MTgiLCJpYXQiOjE2NjYwODc5Mzl9.UhNJ4eQdfIOyPbBcLLkYhqiyyKw7fKKQ8njQZldUfis'} 
+ body=None 
+ </msg>
+<msg timestamp="20221018 15:42:22.377" level="INFO">GET Response : url=https://api-nodejs-todolist.herokuapp.com/task?limit=1&amp;skip=1 
+ status=200, reason=OK 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '21', 'Etag': 'W/"15-UxRglZP01jGkw/nEQ6wM3+gOxAw"', 'Date': 'Tue, 18 Oct 2022 10:12:22 GMT', 'Via': '1.1 vegur'} 
+ body={"count":0,"data":[]} 
+ </msg>
+<status status="PASS" starttime="20221018 15:42:20.375" endtime="20221018 15:42:22.377"/>
+</kw>
+<msg timestamp="20221018 15:42:22.378" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:20.375" endtime="20221018 15:42:22.378"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:20.374" endtime="20221018 15:42:22.378"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:20.373" endtime="20221018 15:42:22.378"/>
+</if>
+<msg timestamp="20221018 15:42:22.378" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:20.372" endtime="20221018 15:42:22.378"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20221018 15:42:22.379" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:22.379" endtime="20221018 15:42:22.379"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:20.370" endtime="20221018 15:42:22.379"/>
+</kw>
+<kw name="Validate status code" library="commonKeywords">
+<arg>${success_status_code}</arg>
+<arg>${success_status_message}</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${expected_status_message}</arg>
+<arg>${response.reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20221018 15:42:22.382" endtime="20221018 15:42:22.383"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${expected_status_code}</var>
+<arg>${status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20221018 15:42:22.384" level="INFO">${expected_status_code} = 200</msg>
+<status status="PASS" starttime="20221018 15:42:22.383" endtime="20221018 15:42:22.384"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${expected_status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:22.384" endtime="20221018 15:42:22.385"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:22.386" endtime="20221018 15:42:22.387"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${expected_status_code}</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20221018 15:42:22.387" endtime="20221018 15:42:22.388"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:22.381" endtime="20221018 15:42:22.388"/>
+</kw>
+<kw name="Validate Header" library="commonKeywords">
+<arg>${json_header}</arg>
+<kw name="Get From Dictionary" library="Collections">
+<var>${content_type}</var>
+<arg>${response.headers}</arg>
+<arg>Content-Type</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20221018 15:42:22.391" level="INFO">${content_type} = application/json; charset=utf-8</msg>
+<status status="PASS" starttime="20221018 15:42:22.390" endtime="20221018 15:42:22.391"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${content_type}</arg>
+<arg>${expected_Content-Type}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20221018 15:42:22.392" endtime="20221018 15:42:22.392"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:22.389" endtime="20221018 15:42:22.393"/>
+</kw>
+<kw name="Verifying response time" library="commonKeywords">
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.elapsed.total_seconds()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:22.395" endtime="20221018 15:42:22.397"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:22.394" endtime="20221018 15:42:22.397"/>
+</kw>
+<kw name="Verifying Schema" library="commonKeywords">
+<arg>${user_schema}</arg>
+<kw name="Load Json From File" library="JSONLibrary">
+<var>${schema}</var>
+<arg>${Expected_Json_Schema}</arg>
+<doc>Load JSON from file.</doc>
+<msg timestamp="20221018 15:42:22.401" level="INFO">${schema} = {'$schema': 'http://json-schema.org/draft-04/schema#', 'type': 'object', 'properties': {'count': {'type': 'integer'}, 'data': {'type': 'array', 'items': [{'type': 'object', 'properties': {'completed':...</msg>
+<status status="PASS" starttime="20221018 15:42:22.400" endtime="20221018 15:42:22.401"/>
+</kw>
+<kw name="Validate Json By Schema" library="JSONLibrary">
+<arg>${response.json()}</arg>
+<arg>${schema}</arg>
+<doc>Validate json object by json schema.
+Arguments:
+    - json_object: json as a dictionary object.
+    - schema: schema as a dictionary object.</doc>
+<status status="PASS" starttime="20221018 15:42:22.402" endtime="20221018 15:42:22.405"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:22.398" endtime="20221018 15:42:22.405"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:20.362" endtime="20221018 15:42:22.406"/>
+</test>
+<test id="s1-t3" name="Validating the API using Put method" line="28">
+<kw name="Create Token Dictionary" library="commonKeywords">
+<var>${Headers}</var>
+<arg>${json_header}</arg>
+<arg>token=${Token}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{Header}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20221018 15:42:22.410" level="INFO">&amp;{Header} = { }</msg>
+<status status="PASS" starttime="20221018 15:42:22.410" endtime="20221018 15:42:22.410"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${Headers}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>Content-Type</arg>
+<arg>${Headers}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221018 15:42:22.411" endtime="20221018 15:42:22.411"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:22.411" endtime="20221018 15:42:22.411"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:22.410" endtime="20221018 15:42:22.411"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${token}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>Authorization</arg>
+<arg>Bearer ${TOKEN}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221018 15:42:22.412" endtime="20221018 15:42:22.413"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:22.412" endtime="20221018 15:42:22.413"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:22.411" endtime="20221018 15:42:22.413"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${app_ID}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>app-id</arg>
+<arg>${app_ID}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:22.413" endtime="20221018 15:42:22.413"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:22.413" endtime="20221018 15:42:22.413"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:22.413" endtime="20221018 15:42:22.413"/>
+</if>
+<msg timestamp="20221018 15:42:22.413" level="INFO">${Headers} = {'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzQ1MTMwMGNlYjcxMjAwMTc1MGQ3MTgiLCJpYXQiOjE2NjYwODc5Mzl9.UhNJ4eQdfIOyPbBcLLkYhqiyyKw7fKKQ...</msg>
+<status status="PASS" starttime="20221018 15:42:22.409" endtime="20221018 15:42:22.413"/>
+</kw>
+<kw name="Convert String To Json" library="JSONLibrary">
+<var>${body}</var>
+<arg>${update_profile}</arg>
+<doc>Convert String to JSON object</doc>
+<msg timestamp="20221018 15:42:22.415" level="INFO">${body} = {'age': 25, 'name': 'harsha'}</msg>
+<status status="PASS" starttime="20221018 15:42:22.415" endtime="20221018 15:42:22.415"/>
+</kw>
+<kw name="Validate API calls using different method" library="Request_Library">
+<arg>${BASEURL}</arg>
+<arg>${update_profile_endpoint}</arg>
+<arg>${Put_Method}</arg>
+<arg>${Headers}</arg>
+<arg>${body}</arg>
+<doc>Validate layer implementation using method</doc>
+<kw name="Hit the api and generating the response" library="Request_Library">
+<var>${response}</var>
+<arg>${BASE_URL}</arg>
+<arg>${ENDPOINT}</arg>
+<arg>${Header}</arg>
+<arg>${METHOD}</arg>
+<arg>${body}</arg>
+<arg>${query_param}</arg>
+<arg>${Form_Data}</arg>
+<arg>${file_type}</arg>
+<if>
+<branch type="IF" condition="&quot;${Form_Data}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>${file_type}=${Form_Data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:22.421" endtime="20221018 15:42:22.421"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:22.421" endtime="20221018 15:42:22.421"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${body}&quot; != &quot;${EMPTY}&quot;">
+<try>
+<branch type="TRY">
+<kw name="Evaluate" library="BuiltIn">
+<var>${type}</var>
+<arg>isinstance(${body},dict)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20221018 15:42:22.422" level="INFO">${type} = True</msg>
+<status status="PASS" starttime="20221018 15:42:22.422" endtime="20221018 15:42:22.422"/>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>json=${body}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="PUT" library="RequestsLibrary">
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>json=${body}</arg>
+<doc>Sends a PUT request.</doc>
+<msg timestamp="20221018 15:42:24.161" level="INFO">PUT Request : url=https://api-nodejs-todolist.herokuapp.com/user/me 
+ path_url=/user/me 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzQ1MTMwMGNlYjcxMjAwMTc1MGQ3MTgiLCJpYXQiOjE2NjYwODc5Mzl9.UhNJ4eQdfIOyPbBcLLkYhqiyyKw7fKKQ8njQZldUfis', 'Content-Length': '29'} 
+ body=b'{"age": 25, "name": "harsha"}' 
+ </msg>
+<msg timestamp="20221018 15:42:24.161" level="INFO">PUT Response : url=https://api-nodejs-todolist.herokuapp.com/user/me 
+ status=200, reason=OK 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '195', 'Etag': 'W/"c3-dLj6+yyk69zkh2MKCJn4fQ+77xc"', 'Date': 'Tue, 18 Oct 2022 10:12:23 GMT', 'Via': '1.1 vegur'} 
+ body={"success":true,"data":{"age":25,"_id":"63451300ceb712001750d718","name":"harsha","email":"har@gmail.com","createdAt":"2022-10-11T06:53:52.922Z","updatedAt":"2022-10-18T10:12:19.519Z","__v":258}} 
+ </msg>
+<status status="PASS" starttime="20221018 15:42:22.422" endtime="20221018 15:42:24.162"/>
+</kw>
+<msg timestamp="20221018 15:42:24.162" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:22.422" endtime="20221018 15:42:24.162"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:22.422" endtime="20221018 15:42:24.162"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>data=${body}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:24.162" endtime="20221018 15:42:24.162"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:24.162" endtime="20221018 15:42:24.162"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:22.422" endtime="20221018 15:42:24.162"/>
+</try>
+<status status="PASS" starttime="20221018 15:42:22.422" endtime="20221018 15:42:24.162"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:24.162" endtime="20221018 15:42:24.162"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:24.162" endtime="20221018 15:42:24.162"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:22.419" endtime="20221018 15:42:24.162"/>
+</if>
+<msg timestamp="20221018 15:42:24.163" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:22.419" endtime="20221018 15:42:24.163"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20221018 15:42:24.163" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:24.163" endtime="20221018 15:42:24.163"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:22.416" endtime="20221018 15:42:24.163"/>
+</kw>
+<kw name="Validate status code" library="commonKeywords">
+<arg>${success_status_code}</arg>
+<arg>${success_status_message}</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${expected_status_message}</arg>
+<arg>${response.reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20221018 15:42:24.164" endtime="20221018 15:42:24.165"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${expected_status_code}</var>
+<arg>${status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20221018 15:42:24.165" level="INFO">${expected_status_code} = 200</msg>
+<status status="PASS" starttime="20221018 15:42:24.165" endtime="20221018 15:42:24.165"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${expected_status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:24.166" endtime="20221018 15:42:24.166"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:24.166" endtime="20221018 15:42:24.167"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${expected_status_code}</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20221018 15:42:24.167" endtime="20221018 15:42:24.167"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:24.164" endtime="20221018 15:42:24.169"/>
+</kw>
+<kw name="Validate Header" library="commonKeywords">
+<arg>${json_header}</arg>
+<kw name="Get From Dictionary" library="Collections">
+<var>${content_type}</var>
+<arg>${response.headers}</arg>
+<arg>Content-Type</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20221018 15:42:24.169" level="INFO">${content_type} = application/json; charset=utf-8</msg>
+<status status="PASS" starttime="20221018 15:42:24.169" endtime="20221018 15:42:24.169"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${content_type}</arg>
+<arg>${expected_Content-Type}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20221018 15:42:24.170" endtime="20221018 15:42:24.170"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:24.169" endtime="20221018 15:42:24.170"/>
+</kw>
+<kw name="Verifying response time" library="commonKeywords">
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.elapsed.total_seconds()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:24.171" endtime="20221018 15:42:24.172"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:24.171" endtime="20221018 15:42:24.172"/>
+</kw>
+<kw name="Verifying Schema" library="commonKeywords">
+<arg>${update_profile_schema}</arg>
+<kw name="Load Json From File" library="JSONLibrary">
+<var>${schema}</var>
+<arg>${Expected_Json_Schema}</arg>
+<doc>Load JSON from file.</doc>
+<msg timestamp="20221018 15:42:24.174" level="INFO">${schema} = {'$schema': 'http://json-schema.org/draft-04/schema#', 'type': 'object', 'properties': {'success': {'type': 'boolean'}, 'data': {'type': 'object', 'properties': {'age': {'type': 'integer'}, '_id': {'t...</msg>
+<status status="PASS" starttime="20221018 15:42:24.174" endtime="20221018 15:42:24.174"/>
+</kw>
+<kw name="Validate Json By Schema" library="JSONLibrary">
+<arg>${response.json()}</arg>
+<arg>${schema}</arg>
+<doc>Validate json object by json schema.
+Arguments:
+    - json_object: json as a dictionary object.
+    - schema: schema as a dictionary object.</doc>
+<status status="PASS" starttime="20221018 15:42:24.174" endtime="20221018 15:42:24.178"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:24.174" endtime="20221018 15:42:24.178"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:22.408" endtime="20221018 15:42:24.178"/>
+</test>
+<test id="s1-t4" name="Validating the API using form data" line="37">
+<kw name="Create Token Dictionary" library="commonKeywords">
+<var>${Headers}</var>
+<arg>token=${Token}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{Header}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20221018 15:42:24.183" level="INFO">&amp;{Header} = { }</msg>
+<status status="PASS" starttime="20221018 15:42:24.182" endtime="20221018 15:42:24.183"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${Headers}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>Content-Type</arg>
+<arg>${Headers}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:24.183" endtime="20221018 15:42:24.183"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:24.183" endtime="20221018 15:42:24.183"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:24.183" endtime="20221018 15:42:24.183"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${token}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>Authorization</arg>
+<arg>Bearer ${TOKEN}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221018 15:42:24.184" endtime="20221018 15:42:24.184"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:24.184" endtime="20221018 15:42:24.184"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:24.183" endtime="20221018 15:42:24.184"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${app_ID}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>app-id</arg>
+<arg>${app_ID}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:24.185" endtime="20221018 15:42:24.185"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:24.184" endtime="20221018 15:42:24.185"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:24.184" endtime="20221018 15:42:24.185"/>
+</if>
+<msg timestamp="20221018 15:42:24.185" level="INFO">${Headers} = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzQ1MTMwMGNlYjcxMjAwMTc1MGQ3MTgiLCJpYXQiOjE2NjYwODc5Mzl9.UhNJ4eQdfIOyPbBcLLkYhqiyyKw7fKKQ8njQZldUfis'}</msg>
+<status status="PASS" starttime="20221018 15:42:24.181" endtime="20221018 15:42:24.185"/>
+</kw>
+<kw name="Create form-data dictionary" library="commonKeywords">
+<var>${form_data}</var>
+<kw name="Get File For Streaming Upload" library="RequestsLibrary">
+<var>${file_stream}</var>
+<arg>${image_path}</arg>
+<doc>Opens and returns a file descriptor of a specified file to be passed as ``data`` parameter
+to other requests keywords.</doc>
+<msg timestamp="20221018 15:42:24.186" level="INFO">${file_stream} = &lt;_io.BufferedReader name='../Abstract API/JSON files/harsha-p.jpg'&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:24.186" endtime="20221018 15:42:24.186"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>avatar=${file_stream}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20221018 15:42:24.187" level="INFO">${data} = {'avatar': &lt;_io.BufferedReader name='../Abstract API/JSON files/harsha-p.jpg'&gt;}</msg>
+<status status="PASS" starttime="20221018 15:42:24.186" endtime="20221018 15:42:24.187"/>
+</kw>
+<msg timestamp="20221018 15:42:24.187" level="INFO">${form_data} = {'avatar': &lt;_io.BufferedReader name='../Abstract API/JSON files/harsha-p.jpg'&gt;}</msg>
+<status status="PASS" starttime="20221018 15:42:24.186" endtime="20221018 15:42:24.187"/>
+</kw>
+<kw name="Validate API calls using different method" library="Request_Library">
+<arg>${BASEURL}</arg>
+<arg>${file_upload_Endpoint}</arg>
+<arg>${Post_Method}</arg>
+<arg>${Headers}</arg>
+<arg>Form_Data=${form_data}</arg>
+<arg>file_type=${file_type_files}</arg>
+<doc>Validate layer implementation using method</doc>
+<kw name="Hit the api and generating the response" library="Request_Library">
+<var>${response}</var>
+<arg>${BASE_URL}</arg>
+<arg>${ENDPOINT}</arg>
+<arg>${Header}</arg>
+<arg>${METHOD}</arg>
+<arg>${body}</arg>
+<arg>${query_param}</arg>
+<arg>${Form_Data}</arg>
+<arg>${file_type}</arg>
+<if>
+<branch type="IF" condition="&quot;${Form_Data}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>${file_type}=${Form_Data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="POST" library="RequestsLibrary">
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>${file_type}=${Form_Data}</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20221018 15:42:27.836" level="INFO">POST Request : url=https://api-nodejs-todolist.herokuapp.com/user/me/avatar 
+ path_url=/user/me/avatar 
+ headers={'User-Agent': 'python-requests/2.27.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzQ1MTMwMGNlYjcxMjAwMTc1MGQ3MTgiLCJpYXQiOjE2NjYwODc5Mzl9.UhNJ4eQdfIOyPbBcLLkYhqiyyKw7fKKQ8njQZldUfis', 'Content-Length': '551649', 'Content-Type': 'multipart/form-data; boundary=6acb2630bec30af915e85f7e750d68c6'} 
+ body=b'--6acb2630bec30af915e85f7e750d68c6\r\nContent-Disposition: form-data; name="avatar"; filename="harsha-p.jpg"\r\n\r\n\xff\xd8\xff\xe1\x017Exif\x00\x00MM\x00*\x00\x00\x00\x08\x00\x06\x01\x00\x00\x04\x00\x00\x00\x01\x00\x00\x04]\x01\x01\x00\x04\x00\x00\x00\x01\x00\x00\x05\x88\x87i\x00\x04\x00\x00\x00\x01\x00\x00\x00j\x01\x12\x00\x03\x00\x00\x00\x01\x00\x00\x00\x00\x012\x00\x02\x00\x00\x00\x14\x00\x00\x00V\x88%\x00\x04\x00\x00\x00\x01\x00\x00\x00\xc8\x00\x00\x00\x002022:09:19 06:35:35\x00\x00\x04\x90\x03\x00\x02\x00\x00\x00\x14\x00\x00\x00\xa0\x92\x91\x00\x02\x00\x00\x00\x04778\x00\x90\x04\x00\x02\x00\x00\x00\x14\x00\x00\x00\xb4\x92\x08\x00\x04\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x002022:09:19 06:35:35\x002022:09:19 06:35:35\x00\x00\x02\x00\x07\x00\x05\x00\x00\x00\x03\x00\x00\x00\xe6\x00\x1d\x00\x02\x00\x00\x00\x0b\x00\x00\x00\xfe\x00\x00\x00\x00\x00\x00\x00\x06\x00\x00\x00\x01\x00\x00\x00#\x00\x00\x00\x01\x00\x00\x00#\x00\x00\x00\x012022:09:19\x00\x00\x01\x012\x00\x02\x00\x00\x00\x14\x00\x00\x01\x1b\x00\x00\x00\x002022:09:19 06:35:35\x00\xff\xe0\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x00\x00\xff\xe2\x02(ICC_PROFILE\x00\x01\x01\x00\x00\x02\x18\x00\x00\x00\x00\x02\x10\x00\x00mntrRGB XYZ \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00acsp\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\xf6\xd6\x00\x01\x00\x00\x00\x00\xd3-\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\tdesc\x00\x00\x00\xf0\x00\x00\x00trXYZ\x00\x00\x01d\x00\x00\x00\x14gXYZ\x00\x00\x01x\x00\x00\x00\x14bXYZ\x00\x00\x01\x8c\x00\x00\x00\x14rTRC\x00\x00\x01\xa0\x00\x00\x00(gTRC\x00\x00\x01\xa0\x00\x00\x00(bTRC\x00\x00\x01\xa0\x00\x00\x00(wtpt\x00\x00\x01\xc8\x00\x00\x00\x14cprt\x00\x00\x01\xdc\x00\x00\x00&lt;mluc\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x0cenUS\x00\x00\x00X\x00\x00\x00\x1c\x00s\x00R\x00G\x00B\x00 \x00T\x00r\x00a\x00n\x00s\x00f\x00e\x00r\x00 \x00w\x00i\x00t\x00h\x00 \x00D\x00i\x00s\x00p\x00l\x00a\x00y\x00 \x00P\x003\x00 \x00G\x00a\x00m\x00u\x00t\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00XYZ \x00\x00\x00\x00\x00\x00\x83\xdd\x00\x00=\xbe\xff\xff\xff\xbbXYZ \x00\x00\x00\x00\x00\x00J\xbf\x00\x00\xb17\x00\x00\n\xb9XYZ \x00\x00\x00\x00\x00\x00(;\x00\x00\x11\x0b\x00\x00\xc8\xcbpara\x00\x00\x00\x00\x00\x04\x00\x00\x00\x02ff\x00\x00\xf2\xa7\x00\x00\rY\x00\x00\x13\xd0\x00\x00\n[\x00\x00\x00\x00\x00\x00\x00\x00XYZ \x00\x00\x00\x00\x00\x00\xf6\xd6\x00\x01\x00\x00\x00\x00\xd3-mluc\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x0cenUS\x00\x00\x00 \x00\x00\x00\x1c\x00G\x00o\x00o\x00g\x00l\x00e\x00 \x00I\x00n\x00c\x00.\x00 \x002\x000\x001\x006\xff\xdb\x00C\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xff\xdb\x00C\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xff\xc0\x00\x11\x08\x05\x88\x04]\x03\x01"\x00\x02\x11\x01\x03\x11\x01\xff\xc4\x00\x1f\x00\x00\x00\x06\x03\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x02\x05\x06\x07\x08\x00\x03\x04\t\n\x0b\xff\xc4\x00I\x10\x00\x02\x01\x02\x04\x03\x06\x04\x04\x06\x02\x01\x04\x00\x00\x0f\x01\x02\x11\x03!\x00\x04\x121\x05AQ\x06\x13"aq\x81\x07\x91\xa1\xf02\xb1\xc1\xd1\x08\x14#B\xe1\xf1\x15Rb\t\x16$3r\x17C\x82\x92%\xa245Sc\xd2Ds\xc2\xff\xc4\x00\x1c\x01\x00\x01\x05\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x02\x03\x04\x05\x06\x07\x08\xff\xc4\x00C\x11\x00\x01\x03\x02\x03\x06\x05\x04\x02\x01\x04\x01\x03\x03\x01\t\x01\x00\x02\x11!1\x03AQ\x04\x12aq\x81\xf0\x91\xa1\xb1\xc1\xd1\x05\x13"\xe12\xf1\x06\x14#BRb\x153r$\x82\x92\xb2\xc2\xd2\x07\x16%CS\x93\xa2\xff\xda\x00\x0c\x03\x01\x00\x02\x11\x03\x11\x00?\x00\xf7$fU\x99\xd7Y\x82K\x94\x06\x01\x831rl@\xb7\xd3\x18s\xd4\xd2\xa2\x05E1\x0e\x013!\xb6\x0c|\xad\x07\x97\xae#\x07\xedv]\x0e\xb6x\x9b\x02D\xecw\x81~\x82\xdc\xc8\xde\xc7\x1a\xc7ji\xbe\xaa\x8a\xc4\x8d\xc0Qs\xb0\xb07\x83\xd0~\xb8\xecC\x83jb-^+\xc7\xab\xa6_\x1e]+\xc2\x93*\xber\x9b1b\xc0\x13&amp;\x14Ynf\xe2\xf7\xe7\x80l\xeaj\x90\xc1\xa6@\x91\x1c\xac\'~\x84\xfdq\x15\xbfk(@\xd6\xcc\x85\x81X*D\xc9\xdc\xda\xd7\xb1\'y\xbd\xb0j\xbd\xa4\xa6\xaaD\xc2\x08 \xcc\xd8.\xf7\xbf\xf9\xb4_\x01v\x18\x82dOQ\xf3\tT\x94\xdc@,\x9d\xe0\x80\xd0\xd1b}~\x9c\xb0t\xe24\x9d\xb5j\xd3\xa4@$\xde\x0e\xe2$\xfe\xbbb%\x1d\xa9\xa6I*\xc9\x00L\x10I1\xcc\x9f//\x7f#\x0e\xd4\xb0\xa7\xaa\x9e\x96K\x96\x94\x8b\xff\x00\xe2\xc6\xf1\xf5\xde\xf8P\xf6d\x07\x19&lt;\xb5\x9f\xef\x8a\x14\xb2\xd9\xd5\x16\x040,bZ\x0c\r\xb7\xb7&gt;\x97\xe7\x819\xd0\x19\x0e\xa1\xa7b\x1c@\xeb\x027\xf7\xb7\xa17\x87*v\xbc\x05$\xab#H \xee-\x16\xfb\xbf\x97R\x8e\xd9=eMt\xdd\x85\xf4\xd9\x94\xff\x00p\x10H\x16\x9b\xf3\xf3\xc2\xef1\xd5#\xc0\xcf\xb8B\x99\x86t\n\x9a\x94\x85\xd4a\xa9\x96$\xe9\xea:\x0f\xa0\xc6\xaa\xb9\xd1\xa7U\x87\x8a\t\x1b[\x90;\x19\xf6\xdf\x90\xc46{UT\xb6\x91J\xa2\xd4*F\xa2\xc4\xc1\x81\xcbh\x9e_\xb6\t_\xb5Ut\xa2kr)x\x98\x00I\x9ef9\x8d\xc0\x916\xc3LM,\x8e\xfb\xfd\xc2\x9a)gY\x06\xadcA\x13\xf8\x80\xdf`A$L[\x9f\xd7\x18\xf9\xc4\x86\x025\x91\xa8\t\xd8\x13ci\xe5\xfb\x8eG\x10}\x0e\xd7=QT(r|^\x17Sh\x92&lt;\xc6\xd6\xfb\x9e\xb3\xdb\x1a\xd2\xa1\x97A\n\xbf\xd4\nn@\x1e\x13\x12z\xfb\xf9\xe1\x12z\xd2\xfat\xf2S\x07\xf3\xc6\x9a;\xb2\xb0\x02`\x11g$\xc0\xd3\xce\xf3\xcb\x9d\xc4`\xc3;\xa9\x05E\x00\xa5\x84u&lt;\xfeV\xf2\xc4B{Y\x99b5\x82\xd4\xc3\x18[\xcc\x99\x00\xcf \t\xf2\xbf\xd1)\xbbe\x98\xa2]B\xd7R\x84\xa9\x13\xaa\xed\xcc)\xb7[\xfb`E{\xae\x9c\xb8\xc7aN_\xcf)\x02\xc3V\xa8\xfc[,\xed\x02g\xe5\xbf9\xd8W\x89\xaa\x80\x03\x85\x9b\xb2\xcc4\xc0\xb7\x97[O.Q\x886\x9fk3\xf5\xa0\xa5\n\xc4X\xea\x0b\x00\x11y"\x04\x9fh\x921\xd3C\xb4\xd9\xcc\xc3iZfA"YIr\xd2d\xed\xfb}0%ScgT\x1d\x8d\xc1bZ\xe0\xc7\xfb\xb7\xdc\xea&lt;A\t\x90\xca#am\xc7\xbf_(\xc4SW\x8b\xe7\xd0\x18\x0e\xcal\xe5A,\xa0\xe9\x98\xb8\x88\x8b\xc6\xde\xa7\x08\xb9\xee\xd2g2\xecBPz\x8c,\xab\x07h\xdc\xf5\xeb\xd2~\xa2J\xf5\xcf14\xa6\xb5Sa\xcf\xea\'\xc7\x06\'{o\x11\xfb\x19\xc6\x7f\xc8h\xd2Y\x80FXR/3\x1b\xfas\xfd\'\x10x\xed\x17\x11Pt\xa3\xb9jb\xa9P\x1a\x16\xe2\xc0\x8d\xc8\xfb\xb65/i8\xbb\xb8QM\xe9\xf3Vu%\r\xb6\x92 I\xf7\xc0\x94\x87\x00\x0e\xa7\xcb\xc0\xde\xe0OU=\x7f\xc9(S\xad\x80\x06\x00`|\xbe\xbbO)&gt;X+qJJ7\x90\xc4\x85\x02&amp;v\x1c\xfa\xc1\x8e\xb3\xcb\x10\xceS\x8bqJ\x8bX6\xa6e\x89\xd2\x0cI\xda\t\xf3&lt;\xb6\x89\xc1+\xf1^\'I\xd5t\x9dA\xf5\x03\xa4\xc8^\x80\x0b\x0b\x9fskr\x11\xdfwS!\xe2B\x9b\rUD\x94\xd6\x10^\xe7\xfbH\xbd\xc7\xd8\xb65\xff\x00\xcd G0\xa3ZN\xa9\xb6\xab\xcf+\x19\xf9}L x\x97\x19\xa7Q\xdd)\xd5n\xf2|cQ`f\xd0\xa4\xd8D\xfd\x9ceN#\xc5\x15\x10\x85\xa9\x04O\x89X\x82\xc0\xde\xdbs&lt;\xa6\xe6z\xe0B\x9b\xbf\xe6\xfc\x01\x82\xdf\xc0\x081\x04\xdaH3\xcfr\x04t\xc0\x9e/A\x9c\xa36\x97\x07W\xe2\xf0\xcc\xf2\xf6\xb7\xb7\xa6 \xb6\xe2\xbc^\xa8:V\xa1 \x89\x00\x10\x04\x00fm\xb0\xbf\xcf\xae5\xd0\xcfq\xaa\xcc\xca\xc91\xb3\x1dD\x83\xd0@\xde\xd3\xd0\x1f\\\x08S\xd9\xe2*\x0b\x92\xc1\x8a\x180\xdb)\xbd\x8c\xdf\xd3\x97.x\xd48\xc52\xd0HH\xd9\xa4D\x90w\x03\xa1\xeb\xd2q\x0e\xe5\xf3&lt;`\x06\x15{\xc3\x7f\xee\xd5&amp;v\xd3 X~\xb6\xdf\x18+qJ\xba\x82-E+\x7f\x16\xab\xc7\x91\xf3\xf5\x18O\xcbA\x19L\xf0\xe1\xa1\xcan2I~c\xca\xc62\x9c\xbb\xa2\x99\x7f\xe5i\x82\xda\xddV\xe7\xfb\x84\x08\x90 \xef\xe6\x7f|l\xff\x00\x98\xcb\xb2*+\x8d&amp;\xc5\x8d\x89o]\xf4\xcfLA\xac\xdc~\xa4\x90\xb5\x1do\x0c\xa4xc`\xc3Q\x92ONq\x83S\x1cv\xbd\'\xa4\x03\xabS!\x83lA\x02}\x0c\xed\x17\xe5\x82]\xff\x00S\xe28|\xfaj\x9d\xba\xeb\xe5\xc0\xb7\xe7\xad\xc6Jmn3H\x96Y_\x08\x82$\\\x9b\x01h\x9bs\xe5\xcf\x1a\xebq|\xb2\xd1\x15)\xd4bV\x17H\xb8\x06o&amp;}lA\xb5\xf1\x0eR\xcb\xf1\xff\x00\t~\xf4\xc5\x98\x93\x0cZ\xe3TD\x90 Lm\xc8cx\xa1\xc6\n\x15\x1a\xd9\x8c\x8d*\x08\x08|\xed\xe2\xdao\xce\xd8Iw\xfd|\xc7\xeb\xbf\x14\x1d\xd8\xa6\xf4\xd3A\xa2\x96W\x8dR\x90Z\xa2\x92\xc0\x01\x0c#\x97\x9d\xa0\x98\xdb\x1a\x07\x1c\xa4\xaeQ\xaa \x04\x90\xd2d\xae\xe2\xd0E\x87\xeb8\x8b\xdb#\xc5\xb4\xb1\x02\xa7x\xa1aL\x82\t\x8b\x81\xbf\x998H\x1c?\xb4\x15*\xe9&amp;\xa0\x8b\x93q\xaa:\x83\xcc\xfc\x8cae\xdad3\xe5N\x9e\xc9@lVA\x9a\xc6v\xe9l\xcdFJj^5@\xea\x1f\xcc\xa8@\x007\x82\xde\xb7\x9d\xc0\x1e\xd8\xd4\xdcj\x86\xa6e\xaf* \t#\xff\x00\xda\x1bG\x9f\x94y\x08\xa2\x8f\x08\xe3\xb5*\x15\x9a\x9aX\t\x90lLy\x7f\xab\xf5\xc1\x0f\x01\xe3\xf4\xcbj5\x1du0b5\x00@\'\xf1\x08=/\xe5\xe58f\xfb\xb4\x1e\x07\xe5\x03w\xfe\xce\x14\xaf\x88\xe6r1\xfaS\x15.9A\xc0\xa4\xd5\xa9\x89 \x87\x1b\\\x12g\xd7\xf7\x9c\x19\xf8\xb5\x11e\xafL\xd4\x13%\x98\x05\x8d\xe3q\xc8|\xfa\xf3\x88\xb2&lt;\x1f\x8e\xd4r?\xa9\xdc\x02\x0c\xc9\xb0\xb4\x98"H"\xc7\xa7?5\x0c\xcfg\xb8\xa5|\xb9\x0bR\xad6,z\x8d@Z\xc6y\xf3\x83\xb7\xd17\xddh\xae\x90\x90\xc0\x883\xd3\x97\xcfL\xd4\x868\xee^\xec\xf5\xc1BD\x10\xc0\x00F\xe0\t\xbf;\xfau\xbe\xbf\xfd\xcb\x93qMK\xb6\x9d )$X\x9d\xf5s2o\xe4&gt;x\x8div{\x8a\xd3\xca-2\x8e\xce\xa8J\xa8ck\x98bL\x12\t\x83\x17#m\xb65\x1e\xcc\xf1\x83M\x9d\x99C\x9eM"\xc3\xa0\xdam\x1d=0o;\xb1\xcb\xbe\xbc\x93`\xeb\x7f+Z\x9e&gt;JI=\xa2\xcb\x87\xd4\xb5\x93H"\x00k\xc0\xe5\xd2}G\xcc\xe0\xad\xda\x9c\xae\xa0\xa2\xa8\xd6H*\x85\x84\x00\'Q0w\xe7\xcb\x7f\x9c\\\xfd\x99\xe3\x01\xcb(\xaaN\x9b(b\x12b\xe7\xe9c\xd3\xc8\xe3\xa7#\xd9.)P-Z\xa0\xab1"d\x92\x007\x1c\x8c\x91\xcf\xe9\x85\x05\xfa\x0f.\x1c{\x93\xc2\x15IC\xb4y"\xec\xcfT\x9f\t\x8e\xed\x81\x03{z\xcd\xc7\x97\xa6\x08;I\x92[\x86c\x1b\x16 (`6\xb7\xe5?L0\xabvG\x89\xa9m54\xebS\xa7I$\x19\x88$\xed7\xbf1\xb5\xb0|\x87dx\x9d%\xa9M\xeaw\xcd\xabY\x00\xcc\x12\xdb\x02y\xdf\xdf\x98\xc2\xfez\x0f.\x1c{\x93\x19#\xbeI\xf88\xfd"4\x9a\xc8\x8a\xa6\xe4\xb4j\x07p7\'\x9d\xb9`\x17\x8f\xe4\xcb\x10+\xa1\'\xf1j\xa8\x0c\x08\xd8\x0f&gt;C\xaca\xa1_\xb29\x9a\x92\x8ek\x87R\x08\x83\xa4\x02\x016\x1c\xc01{cX\xec\x87\x11\x93Q\x98\xc80.\x05\x84]\xba\xed\xb8\xe7\x00m\x83\xf3\xe1\xde\xbf\xad\x0ce.n\xec\xfes\x1c;\xee\xbc\x13\xdc\xf6\x87/uJ\xb4\x81\x88\x08XI^r\'\x7fq\xf5\xc7\x15^\xd0e\xa9\xa5:\x82\xb2\xf8\xacF\xa1!\xb9lz\xef\x86\x95n\xc6\xe7kT\x0c\xb5\\\x85X\x8d\xaf\xbd\xaf\xcc\xf9Z&lt;\xf1\xa1\xfb\x19\x9eaMEG\x1a\x1at\x90a\x84o&lt;\xbe\xbf\xa6\x13\xfd\xcd:\xd3\xe6&lt;\x92\xc6\x1e\xa6\xb5\xcf\x80\xd3\x87\xafG\x9f\xfe\xe5MK\xae\xb2\xe8Q2\x8c?\x15\xe3\x9f&gt;q|\x19;QI\xe9\xbc\xd4\x95\x92,\xd0\x00&lt;\xdaOA\xf9\x03\x86\x9bv\x1f4\xca*5G\x05 \xc0 (\x04\x01\x11$\xef\xd3\xf5\xc1)\xf6\'8\xf5\x19\x06b\xaa\xa5@E\xc9\nN\x96#\xdab\x0f\x9f\xae\x0f\xf74\xf4\xf9Da\xf3\xf1\xf8\xef\xc1&lt;Gh\xb2\xda\x89\xef \xa9\x85\xb8mK\x1b\xefrys\xd8\xdf\x01K\xb4Yb_\xfa\xda$\x9dB\xa1\x83;\x80\xa2n\x0e\xfc\xacc\x0c\xe5\xec\x06v\x93\x1a\x873T\x98 \x92\xcf\x00Z\x007\x00\xcf\xa1\x9e\xb7\xc6\xf3\xd8L\xe9SP\xe6\x9c\xbc\x82A%\x8d\xe7\xc3\xd4\xc6\xd3\xfb\xd8\xff\x00s\xb8K\xfe\xde\xbe\xbf\x1d\xcf(w\'i\xb2\xd7P\xc8\xd3\xe1\x96`\n\x93\x02A\x13\xb1?\xae57h\xe8P\x0e\xe6\xa8!\x0b\x16\xd4\xd2\n\x85\x04\x91\xe4\x0c\x01\xe7\xe4#\r\xfa\x1d\x8a\xceS\xa6\xccjI\xb6\x9d$j;\xed&lt;\xfe~-\xb0L\xc7cs\x8fD\xff\x00R\xad"@\x12@$\xcc\x01*&lt;\xfc\xa3rc\x07\xfb\x9d\xc7\xb7}a\'\xfbc=/=\xd7\xdd9Oih\x15F\xa7PC\xaa\x96\x96\xd8\x11=mcs\xd0\xe3\x96\xbfh\xf2\xa0\x87\xefI3m\'\x90\xdf\x9c\xda\xd2v\xb6\x13\xa8v/2\x99uN\xf8\xbb*\xc3+\x18,G Lo\xb5\xfc\xa3\xae9\xeav\x179V\xcajP%\xac\xac\xe0\x92#y\xe4\r\xfepDa\xc3x\x8a\x90:O[\xa0\x0c=NZ\x9d;\xf1J\xa7\xb4\xb9v \xf7\xabp&lt;E\xa1\xa4\x01\x029\x9e\xa4\xf9\xf3\xb0\xe8^\xd2\xd0 \x11T3\x03\x04\xeb\x04\x85\x88\x13nw\xb5\xb6\xf4\xc3dv\x132\x95%K\x96\x80 &lt;\x81\xf8Ab\r\xa7x\xf9\xf4\xc1\x87bs\x94\x88Pj\x11$j\xd9\xad$\x9b\x19\x8b\xc7_,\x10\xef\xfby~\xfb\x9eI\xa7r\xa3\xf2\xe3\x03\x80\x9e2G\xe8Bs\xafh\xa89\n\x1dX\x80\x08\x86\x8b\x9d\xf9\xfa\xed\xf4\xc1\x9f\xb4\xb9za\x92\xa3\xa8\xd0\x01\xbf\xff\x00\x85\x10\x0b0\x1f\xa4\xf9\xee\xd9\xa9\xd8Z\xc5 g\xaa\xd2vRB\xa2\x92.,\t\x13\x06Z~\x9c\xb0\x93\x98\xf8\x7f\x9f\xaa\xb0sF\xb9b%KC(\x04n.f\xdbr\xbe\xe7u\x87\x7f\xd8xr\xe3\xdc\x9e\x8b\x0c\xff\x00\xb1\xe3=4\x1c\xe4\ny\xa7\x93\xf6\xa7"\xe0\x14\xcdSd\x93\xa6\x9d6\x1a\xd4D\xc3E\xa4\x12cI\xdc\x1ck\xff\x00\xdc\xd9ePif^\xa1(\xc0\x86"\xccz\x92n\x04\x1fOA\x86M/\x87\xb9\xa5\xd4\xb4\x19\xa7T\xfe( 4\x0b\x10`\x0edt\x13\x16\x8cv/\xc3\x9e!W\xbb\xa9\xaa\xa2\xb0h\xd4\xf5\x02)\xd2\t:\x84\xc1\x04lz\xc1\xc1\x0e\xd4x~\xd3#\x8d\x8f\t\xc8\xc1\xf5\xa4e\t\xdbG\xb4\xf4i\n\x83X&amp;$4\x82A\xe67\x81&lt;\xec6\xbd\x85\xb6\x0e\xd3R\xab\xe2\xa8\xc8\xbe%H\xb2\x92\xa7o.^^[N\x19o\xd8\x8e!A\x98\x12\xc0\x99\n\x01\xd6\xadbnG/o_&gt;J\xdd\x88\xe3\x15\xc9_\xfeM\rt\xc1\x06|6\x07\xc4\xa4X\x03"&amp;\xff\x00\xa1\x07Q\xe1\xca\xf5\xf4\x8b\xa0Xt\xbf\xee}\xeb\x9a\x91\xff\x00\xf7\x06_JT\xef\x12\x14\xe9y\xa8\x04C(\xd4n6\xdb\xcb\xdc\x1c\x19\xfbIG\xf0\x9a\xd4\xaf$2\xd4\x04\t\x07N\xdc\xed\xccyb:n\xc3q\xac\x96\\-L\xc3\x14e\xd0\x18\x15\xa8\xc4\x12 \x95\x1c\xcfS\xbf\\i\xff\x00\xda\x1c]5\xcdf&lt;\xd3\xc2AuPH\x91\xd7\x97#\xf3\xc1\xf9j\x0fH\xf7\xf6J,\x14\x8b\xff\x00\xb8r\xcc\x1e\x93f?\x12\xb0c\xac@\x11bG\x99\xdb\xda\xe6o\xd68\xe5\n wu\x14\xa9U\x01\x8d@\xd2\xc1cb\x7fM\xe61\x197b8\xb5R\xe7\xbcef\xa6H\xb9U\x93\xb4\x99\xe5\xed\x83e;\x13\xda\x0c\xb2\xd4Z\x95\x12\xbaF\xa1\xa6\xb9b$l\xb3\xcc{z\xc5\xb0\x87{F\xf9\xfe\xbb\xf3\x00\x93\x03\x95\xcf\x0e\xff\x00\xb5$\xb7\x1f\xa2T\x05\xac\xba\xb7 \xdeO0\x0f8\xe7\x17\x9d\xf1\xa7\xfez\x90:\xfb\xe24\xde\xfc\xe3\xcef\x08\xb7,0\xa9\xf6k\x8a0ju\x05b\xc9t$\x95 \x0b\xcf c\xf4\xdb\x9e6\xe5\xfb5\xc4\x99\x82fs\x0fIU\xc0S\xa4\xf8\x90\xdeI\xf3\xfaXa\xa5\xce\x17\x8a\xfe\xbb\xeax)\x0e\x180g\xd0\xda\xc7\x86q]S\xf1{@\x84\xad@\xe8\xc2\xe3\xc4\xfe\xa4[\xe5\xd7a\xe9\x81\xff\x00\xdc\x14\xc3\x06\x15\xe9\xb6\xa0%U\x812y\t O\xeec\x0c\xa7\xec\xc7\x11\xd6U[\xbc\x1a\xda\xe1\x88\x8a`xLN\xfb\x8by\xdb\x964\xa7d\xb3\xecT-Z\xa1\xb5\x0b\x1d\x84_T\xfbG/c\x86\xef\xbb\xf5\x1d\x9f4\xa1\x8d\xcc\xcdo\xce9\xf6y\'\xe9\xed\x06Y\n\x96\xaeI\x1e&amp;\x16b\x00\xbe\x98\x06lo\xe9\x8d\x94\xbbK\x92j\x8a{\xd0\x03\x13\xb7\xea&amp;\xd3\xef\xf9\xe25\xab\xd9\x0e4\xb5\x1e\x03*\xab\x10\xb5\x03N\xbb\xf4\x93\xfb\xf5\x9c\x12\x9fe8\xce\xa8j\x80\x1b\x05\x95 I\r\xbfS\x1c\xfe\xb8]\xf7\x18\xf6\x17\xef\x827\x19\xef{\x9aA0yp\xa8\xe0\xa5S\xda\x1c\xab;\x05\xaa\xa4\x9bD\x85\xdaz\x88\x069\x9e\x9eS\x8ee\xed\r\x10\xe6j\xa2\x85:T\x16\x05\xaf\xbbo\xca\xd0.`a\x82;)\xc5\xc0\x07\xbd\xa9\xd3P3p \x98\xe9\xefln\x1d\x90\xe2\xa6\x9a\xb3\xd5"`\x86 \x02y\xf9\x19\xb9\xfc\xa3\t\xbe\xed|\x82P\xc6\x9e\\\xe7N\xfa\xf2Of\xed6K\xbc\x81W\xbc;\xeaS\x1b\xef29}0s\xdal\xbc\x02\x8e\x92LX\x89\xe9;\xfd\x8cF\x8f\xd8\xee3N\xab\xd4/SI \x80\xb2\xcc\xa0\xc7%\x92\x01\xe4=\x8e\xd3\x8d\xc9\xd9.-PJ\xd7\xf0\x86\x12\x08*d\xcd\xb9\x10\xddL~xP\xe7LM\xf5\x1f\t7\x1bj\xd7\x8f!\xdf&gt;JC~\xd0\xe5\xa1Uk\x00\xece\xb6+"\xf1\xef\x1e^\xf7\x18\xd6\xfd\xa1\xa2\x15&amp;\xb5-nH\x008\xd8\xd8\x92y\x11\xcb{\xfd\x18\xeb\xd9\x1e$\xa4w\x8e\xe5TJ\x84\xf1H\x1c\x89\xeb~{\xfbc+\xf6+\x89\xba\x02\x95J\xd9\x8a\x81\xf8\xa4\xec/\xbe\xdfN\xb1\x87K\xf4\x1e_=\xcf$\xadhh\x80f\xd9\xf0\x1e\t\xf0\xdd\xa0\xcb#\x81\xdf\t\x80\x08\rb/\xbby\xdc\xdf\xd6q\xb3\xff\x00qeb;\xd0\xa4\x02t\x86\r\'\x91\x99\xf3\x81\xe98\x8f\x1f\xb1\xfcV\x9a\xd3-Q\xb5\x1d\n\xca%\x8cZL\x8d\x8f8\xdcE\xf1\xdb\x97\xec\x9e`;MG\xa9\xe0\x1b\xd9\x81\x86\x04\x0b\xc9\xf4\xf4\x18\x06\xfe\x83\xaf\xe8\xf5\xec\x04\x8e0DE\x8f\xb7\xc2v\xb7h\xb2\xba\xd4\xb5]*\xb7\xb9\x12Z\x079\x81o?\\\x1d{KE\x0b\x05\xac\xacL\x90K\xad\x87\xa1\xdc\x01\xb4\xc6\x18\xf9\x8e\xc5\xf1J\xb5[\xba\xcc\x18(t!\x05B\xf8`\x196\x9fH\xe47\xc7\x05&gt;\xc5qT\xaa\rV\xab\xad\x04\x96\x04\xe8v\x91\xe12b\xdf\x96\xdc\xb0\x84\xbc\\p\xcb\xdb\x97\x9f(aq1\x97#\xcb\xd0\xfa\xa93\xff\x00p\xd0\xee\xd5\xcdD\xb9\x83\xcc\xde\x04\x88;\x93\xce\xdc\xb0F\xedFZ\xc0f\xa9\xa2\x81\x07Y\xf1\t\xdcZI$\xc1\x026\xdf\r\x05\xec\xbf\x114\xc5&amp;\x15\x03jP\n\x11\xa4I\xb5\xe7\xefc\xd7\x1cU\xbb\x17\xc4T\x96J\x9a\x98\xb1\x10H\xb1\xde\xe6\xf7\x1e\xb3b0\xe0\x1dI&lt;j?c\xbdSx\x92I\xe2{\xd1=\x1f\xb4\xd9b\xf1\xad\x1d\x01\x1aX4\xea2d\xef\xcc\xfa}0a\xda\x8c\xa9\xb9\xa9s \xa8\x03b"w\xe57\xf2\xf9\xe1\x88\xdd\x8d\xe2\xa4\xa1J\xd1\x00\xea\x00L\x98\x13\x1e{\xf2\xbe0v3\x8b*\x96j\xac\xc4\x08\x0c\x01V\x1a\xa6\xde~s\xbf,,;Q\xe1\xfb\xeeyBu\xe9\xcb\xcf\x9c\xca~\x9e\xd1\xe5U\x8e\x8a\xc5\x88"C\t\x91\x1c\x8f\xd4u\x8fL\t\xedVDY\x1c\xeac\x02\x0c\xe9\x10\xd67\xb1\xb0\x8fL4)\xf6?\x88\x8a}\xe0\xabQ\xca\x90\xaf2\x18,\x8f\x99\x8e\x93\x17\xc7\x15N\xc6\xf1\x12HCQY\xe5\xc4\x9b7I;\x88\x9f\xb1\x18!\xda\x8f\x0f\xdaT\xfa^\xd4\xe4\xdaK\xba\x96\x04\xae\x82wi\x857\xe6y\xc7\x9e\n\xbd\xa5\xca\x90\xe0\x90\x1f\x91\x15\x00\x07\xd0\x11\xb8\x13\xd2z\xe1\x8d\xff\x00\xb2\xb8\xac\xa8WR@\xd6\xc0\xb4\x15\x07\x94\xf3;\xc8\xf33\x83\xd5\xecW\x12n\xe9\xc5J\x94\xa0\x8f\x08mA\x84\x80\xdc\xe4\x1d\xf7\xf3\xc1\x0e\xd4x~\xfb\x9eP\x9dMk\xa6\x94\x1az\xd7T\xf7\xa5\xda\\\xb31\xd7UYE\x8a\x96Q\x07ay\x1c\xc7^Q\xd3\x1b?\xf7FQY\x87z\xab\xbc\x05 \x90,\x06\xd6\xf3\xfb\x9c0\xeav\x17\x88\xc8a\\\xf8\x88\x05\x08*,I\x06y\xf2\xbf9\x9c\x18v39\xf8*=I\x04\x88S\x0cA\x81s\xb6\x9c4\x17\xd2\x83\xbe\xbe\x9e\x08\xac\xe5\x11M~;\xe6\x9f\x1f\xfb\x9f.\xfaT\xb8\x04\xc9\x07\xf1l&gt;@\xf3\xf2\x8d\xacp/\xda&lt;\xad\xb5TY\x90\xa4\xa9\xf1\t\x06\xfa}o;\x0f\x96\x19\x89\xd8\xae"Qt5C\xb8!\x98\x02\xb0m\xe5\x7f|\x11;\x17\xc4\xfb\xc7~\xf7I$B\xb3o\x11pyG\xce\xf6\x8c/\xe5\xa3|O\x0f\xdfb\xa7\x8e]\xeb\xcez\xd1=\xabv\x8b\'E\x98\xb6b\x0e\x8d*\x01\x81&gt;d\xeco{\xf9zr\x7f\xee\x8c\x9a\rO\x98\xd4\x08\x89\x04\x10\xa6\x0c\xde\xd2?^\x98i\xe6\xbb\x1b\xc4j7\xff\x00i12\xc0\xc8\x9d3\x10,F\xf3\x17&lt;\xfc\xf8\xbf\xf6\x0f\x17\xa8ekJ\x01\xe6\x07\xa7C\xcf\x97!\x85\r|I\x81l\xb9q\x17\xe5\xc8\xa5O\xb1\xda\x8c\x91\xb2f&amp;\xd7`\xb2\x01\x06`\xc9\x16\xdaH\x907\xe9\x81\xa7\xda|\x99rZ\xbd1N\x08\xd56\x0f6\x03x\x03\xec\x9c2hv\x0b\x88kN\xf5\xce\xa4a\x01_\xc2\xc3h\xb1":\xcf\xbf\x9e\xe5\xecw\x10\xa7^\xad:\xd2\xb4\x88\x06\x9e\x83*\xb2\xdc\xfd\x8f\xb8\x83{J\x80\xe3\x98&gt;\x031\xa9\xe9My$\x81M\x04G*x\xf3\xf0\xadS\xd5\xbbO\x95\x11\x19\x84\x08\xd1,L\xd8\\\xc4N\xd3\x80\xa7\xdaL\x9b\x82S1"t\xc6\xc0\x887\x99\xb0\xb5\x8f\xa7\\1j\xf6#\x88)\x08\xb5\xe4\x1b\xa8\x90\x00\x04\xec~q\x1f\x96:\xa9\xf6/;F\x91\x1d\xe8\xf1I\xd4\xd3\x04\xec\x14y\x13\xb7)\xf9\x85\x82/\x9f/d\xf6\x86\x9b\x9a\xf1\xa7s\xc3\xe1=\xa9v\x87,\xc1\x9a\x9dUn\xec4\xa6\xa1\xe2\xf22E\xa6\xf7\x1bc\x95\xfbM\x94b\x19\xabSM\x81B\xc2n\xaf\xd0\xfe\x91\xfa\xb5\xb2\x9d\x8d\xce\x0e\xf9\x99\x9dj2\x90\x11\x89\n@1 \x98\xbe\xd0\r\xfex\xd0\xfd\x82\xce\xb3\xf7\x85\x8e\xe0\x80\t;\\\xednq\x1b\xf9a\xbf\x94\xe5\xbb\xe7\xdf\x94qO\rfFz\xce\x9d\xf5\xe5\x0f\x05\xed\x1eL\x83\x15\xd0\x16h[\xda\x07-\xe0O\x9fS\xcf\x03\xff\x00\xb9&lt;j\xcbV\x9fw0D\xa8\x0c`\xc0\xdeo\x04z\x91\xea[G\xb1\x19\x96\xa4\x83\xbf\xee\x88:\xa0\xc9,\x0b-\xf4\x8b\xcf\xae\xfc\xa0c\x9d\xbb\x07\xc45\x16\x19\x96!e\xd1t\x90\x18\xe9\x81o(\x1e\xbb\xfa\x10f\x86\x9aG\xed\x1b\x8d\xec\xf2\xef\xaf(w\xff\x00\xee\xaa\x1d\xe2\xa8u@\x14\xea\x0b\xe2\x12#s&amp;\x0c\x7f\x9cc\xf6\x9a\x89hZ\x9a\x08\xd4u\r\xa3x7\xfat\xb6\x199~\xc4\xf1CV\x1a\xab\x12n\xccf\x00\xde7\xfd\xf0\xa4{\x15\x9a\x16l\xc1\x90\t\x8b\x8b!\x98\x9bH?\xe0\xdb\x04;Q\xe1\xfbK\xb8\xdaL\xdcVOg\xb8\xca\x17\xe9\xf6\x9f,\x0b\x97\xa8\x18\x88"\xc6&amp;\r\xe0\x91\x17\xdc\x0f\xa6\xd8"\xf6\xa3*X\x16\xaf\x02f\x10\x08\x8f\xfa\xc9;\xc5\xcf_L7\x07a\xb3\xae\x1c\xbdf\nd\xa8\r\x04\x0f\t\x07\x9fH\x8e|\xb9\xe3Y\xecVe\xc2\xab;\x80\x06\x93;\x1b\x9b\xc6\xf3\xd3\xf2\xdf\x07\xe5\x9e\xed\xf8\xdb\xe5;s\x08\n\x12i"O\xea\xde\x93H\xa2v\x0e\xd6\xe5\xc8hv`\x00\x03\\I\xd4@\xb4\x12&amp;o3\xb73\x8dg\xb4\x99G\xb3\xbb\x07\x07T\xa9\x07x\x8f\x0c\xc9\xe7o\xae\x1a\xd9^\xc5f\x17]#X\xc4Ak\x80\x0f"$r\xdb\xdf\x96:\xdf\xb0\xf5\x14\xa3\x7f2K\x80\x01\x007X\x06v\xb0\xf5\x91\xe5\x18U\x1ca\xc0;\xc2\xbcG\x08\xf1\xaf\x8f\x82\xdd~\xd0e\x14\xc0\xccC\x12\x18\x87!I\x11\xb0\x04\xf3\xdec\x9e\x0b\xff\x00\xb9h\x92\x14\xd4ZjRu\x8b\x82W\x91\xbd\xe6\x0f\xb9\x03\r\xac\xdf\xc3\xdc\xcdj\xc8\xdd\xf3\xeb\xd81\x9d o-}\x86\xd0\x07\x97,w\x0e\xc3fM\x1d\x06\xb6\xa2\xa4\x19\x04\xa90n\x17U\xc0;\xcf.c\x02H\xc3\x15\x91^7\xb5i\xeb\xc7\x94+\x8e\xd2e\xd6J\xe6W`u\x02\xa2G8\x04\x98\x13\xe9\xce&amp;pQ\xda\xec\xb5 EJ\xd4L\x1b\x13Qfw\x13~^g\xc8\x11\x86\xfdn\xc2\x07/\xfdZ\xc3P\xd2N\xa9\x00\xf4\x03h\xb8\xf7\xf6\xc72\xfc8p\xc1\x86cZD\xb8p\xc5\xc8\xff\x00\xb5\xf6"E\x80\xbe\x04\xc3\xf6\xe9\xbaA\xd6\xa6\xa6\x91|\xe8\x9e\x07\xb6&lt;5\xa9\x80j\x95r\x0c\xb4J\xcc@!\x87?;\xed\x00\xe3\x95\xbb_\x93\x0b&amp;\xa34\xa9\x02M\x80\x98\x92\x08\x98\x1f\x96\x10\xd7\xb0\xc6\x94*\xb5J\x82\n\x88\xba\xa9\x1b\x0b\x81\xcf\xcf\x19K\xb1\x15\xc9ub\x080!\x89\x8d\xc9\x89#\xacyX[\xa4\x9fo\x8f\x97\xed\tI\xfb_\x97\xa6|U&lt;\x02\n\xc1\x04\x02\xbc\xfa\xc1\xe8y\xfbcj\xf6\xc3,\xc5\xaa5P\xaa\x14\x12l-\x11:|\xcd\xfc\xfeXH\xa9\xf0\xf1\xeb(\xf1\x15)\xaaWQ\x069(\xf2\x03\x97\xd3l\x15~\x1b0@\xef\\\xaa\x12\xabz\x85\xd8\xf9i\xe9\xbf\xfb\xc1\xf6\xf8\xf9~\xd2@\xa7\x0fo\xe9(\x7f\xefn\x1f2\xd5\xf5\xa6\xa8h\xdf\xe8d^&gt;\xce\x0e\xdd\xb3\xe1\xac\x18\xadM!\x06\xa2L\xec\x06\xdc\xf7\xfd0\x99\xff\x00\xe2\xe7)\x97,\xa1\x99\x8bL\x02b\xfec\xa5\xac|\xb1\xb6\x97a\xe9\x8b\x08mf\xeb&gt;#\xd7\xa5\xb7\xe7\xe6p}\xbe&gt;_\xb4G&gt;\xfb\xf3+}&gt;\xdad+\xb0aV\xa8\x85 0\xb5\xc1\x88*\x05\xc667k\xa8\x0f\x10gm#\xfbm=&amp; \x99\xdf\xf4\xc0R\xec\x06]\tmF\x99"t\x93$\x91\xca\xd2\x05\xc7\xbf&lt;t\x0e\xc3\xa6\x96\x0c\xbf\xd3*G\x85\xaf\xe5\xb78\xfa\xe0\xfb||\xbfi{\xef_u\xc2;j\x8a\xcc\x08\x12\xc2M\xc6\xa2\x0e\xd2v= _a\xcf\x1b\x93\xb5kQC\x86*\xa6l\x7f\xec\x08\x17;\x01\xcb\xa9\x91\xe9\x80\x1d\x84\xcb5\xc8e+`&amp;\xe4O!\x1e[\xf5\xdc\xe1O/\xd8\x9c\xb5:}\xd9`\xe0\xc9\x82A\x1f\x880\x04\x98\xf6\x1b\xcf\xcb\r\xfcc\xfeS\x95\xa2S\xa3\x0e/\x94x\xe9L\xd2I\xedHM\xd8\x07\x93\xa4)\x17V\xdaD\x9b\xc78\xb8\xf6\xc0?j\xe9\xad5i\x7f\r\x8e\xbd\xd8\xcd\xc8\x8eB\xdc\xc4{]v\xa7c\xb2\xee\x03\x85E\xb0\x0b\x116\xb4\xc6\x9b\xf9~w\xc6\xb3\xd8\xea\n\x08gV\x02\xd7\x8d\x88\x1c\x8f9\x8b\xe1\xa8\x8c;I\x81O._\xb4\xda\xa9\xda\xfaF\x1cUU\x04\xc1\x0e,\xb7\x1dy\x926\x9b\xed\xe84\xbb]E\xdfIf,$\x08\x1ay\xf2\x8e\x9f\x97\xae\x15*\xf6\x0f#Y\x86\xaaZ\xb4\x1dP\x18\xa2\xb1\xd8\x10.\x0coo\x96;\xe9v/%@\xc0Eb\x00$\x11%z\x89\xeb\xe7&lt;\xb0(\xf7\x9b\xaf\xba@\xa9\xda\xdc\xbd7bX\xcfv\xc6&lt;^\x00\xbaL\xd8z\xc8\xf3\xc7\x1f\xfe\xf6\xa6\xd4\xe5H \x81\x10\x08+&amp;\xc4\xcd\xaf\x07\x7f\\&lt;\xa9\xf6K"Ig\xa0\xa1L\x8e\xad\x11}[\xd8\xcc\xfb\xe3\x8d\xbb\x15\xc3j\x92\xa2\x89C1`4\x10\'\x9f\x95\xff\x00\xce\x04\xdd\xe6M\xa9\xca\x99E/KyX\xa6zv\xde\xa56ja\xc8V\xd8\x01\xa8\xcf.\\\xad\xe9\xb5\x84ch\xed\x93iml\xdaO\xe1\x1bKO\xfdw#\xa8\x03\xcf\x96\x1e\x14{\x17\x92\xa2\xac\xe9\x97\xa2\xe4O\xe2]G\x94\\\xed\xcf\xf4\xc6\xd3\xd9\x0c\x85N\xef\xbc\xa1M\x07\x89\xa4 $\x92`o\xb1\xb8\x03\x9d\xb0\xe6\xb6D\xcf\x0fO\x9e\x89\x0b\x84\x88\x02\x07\x01\xd8L\xca]\xb2sB\xa2\xaf\x8fI\x92\xd0|;Zz\x8b}q\x89\xda\xf7\xaa\xd2\x8a\x1e@\x07\x9c\x1e`\x99\x90&gt;\xf9a\xe8{!\xc3)\x85D\xa4\x14\x19f\xb4,\xc6\xcd\xca\xf6\x806\xeb\x8c^\xc7dAb\xb4\xd5l\x08+e\x90\x07\x84\x81\x04\xf5\xfd0\xa1\xa0\x18\'\x90\x83^\xbd\xf8\xd18\xb9\x95\xcey\xf0\xe5\xa0\xf0Q\xcec\xb5\xf9\x91W\xbb\x14\x98\x88o\x15\xf4\xdc\x82`ma\xe6\x04\xe1\xcd\xd9^\xd3\x0c\xfb\xd6\xa0\x80\x86\xa6\xc1L\xcc\x90uI\x04\xf4\x8d\xba\x813|*\xe6{)\x94D\xaa\xc6\x9a\xb4\xab\x95\x11"\n\xc4\x8b\x083\xcf}\xa2N\xcdn\xcep\xe1\x95\xe2u)\x05Z]\xdb3\x88\xfe\xf9:V`\xc9\x02\xf7\xdb\xd3\nY\xa1\xe8\x9a\xe0!\xa4\x0b\x8a\xe7\xa7\xb9\x858\xe5\x9c\x14P\xa5H#}\xda\x08\xf3\xf3\xf2\xe81\xb8i;\x80 \x0e{\xdc\xdf~\xa3\x1c91\xe0A\xe1\x16\x81\x16\xf1O\xef\xcf\x94\xe3\xa7\xc7$h$\x8b\x186\xfc\xb0a\x888\x82\x94\x81~\r\x98\xa6u\x91H\xaab\x88\x07`\xd1\xc4T\xcc\x10\xda\xd5\x83\x13"\t\x92\x04\x8f\xbb\xe3\xb5{\x16Q\xa1*w\x80\x00\x14\xc0R\x05\xa4\x83\'\xe9|I\x8fF\x9b@`\xa8\xc0\x82\x04\xcc\x81\x04\xdc~^\xbd1\xb1@\x05 /\xe1\xf4;\\I\xf4\x17\xbe\x17pjU\xbd\xf3\xa0Q\xbav&gt;$\xd5\x01\xc8\x10\x04j\x10I\xeb\xf3\xde\xc7\xe7\x8d\x95\xbb\x19J\xa1\x13Y`\x11(\x01\x00\xff\x00\xe2N\xc0\x02?&gt;\x97\x91\x98-\xf4\xb1"\x0f\x80\x88&gt;w\x1e{}:`\x85\x03)\x04\x05\x166\xfdv\xbfS\xe7\xbe\x1a\xec0b\xe6\xbci\xc6\x9dj\x90\xbc\x9e\x1c\x94j\x9d\x85\xcb\xd2,S\xbb%\xf4\x80\xaa\xc5\x8c\x19\xd4:Xr\xf3\xeb\x8e\xa3\xd9\x04T(B\xb2\x81\rh&amp;o\x03\xd3\xef\xa9\x90\xd6\x9aD\xa1\x12\x00 \xc1\x93\x7f\xcf\xf7\xdc\x1c\x0b\x83\xa6\\(\x90A\x8d\xc8\x8f8\x83?_20}\xb3H#\xd3\xc3\xb0\x93y\xda\x9e\xe3\xe3\xd7U\x1d\x1e\xc6e\x99\x04\xe9\xa7\x1a\x88X\x07W\x90\'o!k\x83\xcb\x07N\xc4e\xad\xa9\xb4\x91\x04i\xfc&amp;\xc7\xc2I\xf2\xdb\xcf\x9f,H=\xdc\xa1\xb6\xc6/x\x12nG\x94\x8f\xd7\x01\xa2`\x0b\xc5\xb7\xb5\xb7#\xce\xdc\xcca~\xd9\xcc\xfb\xfc#y\xda\x9e\xe3\xe3\xd7R\x99\x1f\xfb7$\x1c\x96\x04\xc9\xd4Ya_L\x9bLG\xaf\xe60?\xfbC"\x0b\x03H\xb2\xb9\xf0\x91\x1a\xa3\xa1&lt;\xfdzGQ\x87\xb6\x91\xb4\x98\x1c\xb9\x1e\xb2v3\xd3\x97\xbe\x0e&amp;eE\x80\xb8\x13\x00m=~\xbf\x96\x17pjR\\\xc9\xbf\xf5\xf1\xdc\x94\xc5N\xc6p\xf0\xe5\x8a\x00E\xc0\x0b\x04\x80\r\x89\xdf\xc8u\xb7Lt\x0e\xc8\xe4\x1d\xed\x97PB)\xbc\x03c$\xcc_\xa4\xf4\xbe\x1eJ\xa0\xdd\x98\xc1o\x91\x06G\xd3\x7f\xa9\xc0\xe8bK\x00N\x9f\xee\x16\x91\xb7\xca"&gt;\xe5\xbb\x87P\x92/z\xf9rM4\xec\x86B\x18\n*\xcb/\x16\x1b\x92O\x88\xc0\xf4\x91=q\xa8\xf6C\x87\x95`r\xd4\xd8\x9d\x9cD\x83\xb4\t\x17?M\xcf\x9e\x1e@\xb8\x81`\x04r\x02&amp;\xf7;\xf5$\xf2\xc6\x01#TOA\xb5\x8d\xe6z\\\xe1\x89{\xd3\xbe\xf5L\xd3\xd9l\xaa(\x02\x92,\x08$@\xdf\xaf\x97\xcb\x966\xd1\xec\xceJ\x81GJ\x001 \xf9r&amp;\xf1\xcc\x00G\xa5\xf0\xeb 2\x95"\t\'x \x0f2y}\xef\x8c\xfc1\x06@\xb0?\x9cr\xc0\x84\xdc\xa9\xc0\xb2\x95*jjae\xb4\xf8F\xe9\xe7\x02$\xde/\x7f&lt;s\xb7exq\xcc\x1a\xbd\xc9\nG\xe1 [\xe7{\xf9\xed\xbe\xe7\x0e\xd6i\x80\x1aA\x02m\x17\xe7\xbf\xfa\xc19\xcf\xdf\xdd\xf0\x03\x15\t#\x9fuM\xa5\xec\xee@\x92\x06]\n\x90n`\x18\x83\x03m\xe4\xf2\xeb\x81\x1d\x9d\xca\x05\xbd%0 (Y\x00\r\xa6\xc7\xcb{\xcc\xed\x87-\xe0m\x00\x91\xe7\xd7\xe5\x7f\xdf\x96\x06\x0c\xc0\xb9\xfdy\x81;\xfd\xda0\xe9tMc_\x0c\xfb\xcf\x8aH9\x13\xd6\x0fs\xcf\xcd7\xe8\xf0&lt;\xb5)d\xa441\x04\xf8bo\xcf\xce\xf0\x0e4T\xe0\x99J\x8eY\xe8\x8b1\x11\x03\xdb\xeaGKs\xc3\x94\xaa\xc2\xc1;m\xb7K\x1ec\xeb\x8c\xee\xe0Z!\xa2-7\xebq$ml\x00\x19\x10fb\xd5"\xa2\xff\x00\x1d\x95\x00\x8b\x99\xe9\t\xbc\xbc\x13&amp;\x14\xff\x00@\x86\x06\xd6\x12\xc0\x1b\xfe\x9c\xbex\xdf\xff\x00\t\x93uT4\xd2\x98\x06\xc4\x8d\xf6\x90E\xe3i\xb6\xfe\x98\\4\xe1\x81\x910`\x93\x1bn7&gt;\xb7\xc0\xe9\xd2\x01\x0c\x0b\x13\xb0 \xc7\xb7\xdc\xe2GT\x10*t\x15\xcd*o\xd4\xec\xef\x0fF!i+\x12Li\x10\'h\x8bo\xe7\xe7|\x1e\x97\x06\xc9\x02W\xb9\x08\xcb\xcc\x00\x01\x88\xdb\x0b\xca\x0b\x00I\x03K\x93\x11s\x13s\xb0\x838\xc3\r\xa6\x04\x132y\x916\xf9\x00q\n\x12@\xe1YVb\xcdJ@\xb0\x91y\x03\x91\xf4\xb9\xdf\xd7\x06&lt;\'.\x01\x06\x952\xa4xH\x12|\xa6 \xfa\xcc\xf2\xc2\xa4\x80w"\x1bm\xed\xb1\xfa|\x86\xd3\x83\x9d!\x8e\x89 \xa8 \x99\xb9\xf4\xf5&lt;\xbeC\n\x1cF|\x12\x16\x82f\x125&gt;\x0f\x92\xa6\x8d9p\x0e\xa9\xf0\x93\x06&gt;\xed\xe7\xeb\x8c&lt;/*\xa9\xa5PL\xc4\xe9\xf1m\xcc\x8d\xc1\xe6\r\xf6\xbe\x16H\x05H\x99\xf3\x9f{\x91\xd3\xa4G\xb6\n\x10\x0b\xa9\xb1&amp;g\xcfx\x91\xeb\x83x\xc4M\xf5\xaa\x00\x02\xc94d\xe9\x980\x04\x13\xa5\x99D\x1d\xa29\x9e|\xb7\xf9\xe3q\xc8Rk\xb2\x81c!@\x12o\xb4\\o\xd4c\xad\xa9\x92@\x06\x007\x9b\xc4H0\x08&lt;\xfe\xe3\x07:Z#\xc4\x04\xae\xa0 \xd8\xeeG\xbe\xfe^\xb8D\xbd;7\xf9+\x8cd2\xe1\xe5\xa9\x8f\r\x83\x12\x0f;I\x82H\xf4\xc1\xdb\'A\x8f\x81)\x86:|E\x04\x89\xe8@\xfb\xf7\xc7Q\x00\xef\xcb\x1b\x07\x84\\\x08\x91\x06\xd3\xb8\xb0\xf2\x8b\xdb\xcf\x02;\xef\xd1p\x8a\x01\t\xd0\xaa\xa1bH\x00\xde\xd2c\x90\x9d\x88\xe5\x83\x8a\x01\x99\x8c\xa3j0Lo~\x9f\x97Kr\xc7z\x05Vh\x92"\x1c\x10\'x\xe7\xbc\x18\x1fq\x8d$C\x10\x1av1\x10}g\x9f\xf9\xf2\xc0\x85\xc8\xb9:t_P\x14\xca\xb5\xb4\xact\xb4\x82ym\xeb\'\x1b{\x8aq\x01v\x06\xd0:\xda\x1b\x97 m\xf2\xe7\xb2\xccX\xc4\x90\t;{\xfb\xfd\xf5\xc1\xd5F\x90\xc4\xc0\xda\x05\xc8\x8bG\xce\xd8\x10\xb9\xcd*p\x0b \xb6\x9b\x1b\xc4\x1ev\xf9\xfc\xb7\xc1\x8eZ\x98\x1a\xc2\xab\x05\x1e\x1b]\xa6\xe67\xb8\x06\xfe\x83\x96:\n\xacJ\x93&amp;\xd1\xc8\xf5\xe9\x1d`\xfe\xd8,\x95\x89\x9d\xce\xe4\x1d\xa4Xr"}&gt;Q\x81\x1e\xeb[\xa5&amp;*\xc2\x9c0Q\xe1\x811k\x81\xf3\xfa\xf5\xc1J\x06*U@\x90v\x00\x1b\x01\xc8_\x9d\xce\xdex\xeaE\xa6\xb5%\x81}_\x86\xfb\x10?/\xcf\x9e2\xa2\xcb\x17\xdb\xf1\x13\x17#\xc8\x0f9\xe5\xd3\x02;\xf1\xef\xa2\xe6\xfeU\n\xff\x00U\x8c\x0b\xaa\xc4L\xcf\xeb\x7f\xf5\x8dkAu\x12\xa3F\x92.\x00\x04\xed\xf7\xef=1\xd2\x8cH\xd8\x99\x06=\xb6\x1eS&gt;\xd82\xaf\xf6\x90t\x9f\xfc\x84\xcf\xac^\xfdm\x81\'ON\x14\x1c\xf8\xfc.n\xe9\x18\x06d\xf1\x13\xf8\x8e\xc4M\xc4}\xfc\xb1\xb0S\x1aYt\x82$M\x85\xa7a\xef2?,o\xd0`\x08\x06\x0c\x9b\x83\xe1\x9b\xff\x00\xad\x8f,a0\x1a\xd1\x7f\x99\x17\x07\xef\xf4\xc0\x97\xbf\x05\xa3\xb8H#@VN\x87\xd4\xde?~\x93l\x0ft\x86\xfaI\x04\x10opb\xd1\xe8L\x8d\xf9\xe3yU\t\xb8,\xc4\xccX\xcf\xad\xa2#\xf6\xc0\x10\x02\x83u0@\x91i\xda\xd1\xb9\xde\xf1\xe6g\x02;\xefU\xa0\xd1\xa6\xc4\x01\xad \x05\x00\x1d\xc9\xdfP&gt;\xbf\x96\xf8\xd9\xdd"\x88\xbe\xa5\xddt\xdf\xda:\x1b\x9f\xa66\xe9\x03\xa1$\x82\xa0n\x0c\xce\xa9\xebk\x0flb\xc6\xb2\xa4\x99\xb9-\xb7P\x04\xed\x7f\xdf\x02\x16\xb5\xa6\xc6X\x06\x82\xa4\x81"\x08\x17\x92:\x8f\xf7\xe6DS\x0e\x14\x02H$\xea\xe9\xfe\xfe\xb8?v\xccN\x90| \x06ca}\xef\xe9\xfbu\xc0\x05\xbc-\x80\x02L\xd8\xcfN}|\xb0!\x13\xc1e\xd0`\x02\t\x02\x04o3\xf5\xe5~\xa3\x06Z$\xa0i_\xc5\x00\x18\x90\x01\xb7\xb5\xbd\xa7\x06\x002\xb42\xc4\xc1\xdec\x94\x19\xe4.&gt;D\xe0`\xc7"\xbd\r\xad\xbc\xcd\xbd\xfe\xc6\x04-f\x8c\xc3]\xa4\xc0\x9eg\x91\x11\xb8\xb6\xf6\xeb\x81je\x8c\xb5\xe0o$\xd8r\xeb\xf4\xc6\xe3\x1a`~%\xfc7\xb5\xf7\xf9\x0f\x9f&lt;\x14\x82\x08 \x99\x9b\x02m\xb1\xdbk\xe0B\xd2\xca\x10\x91\xb5\xa6H&gt;Py\xed\xb8\xf48\xd6\x88\xc1\x94\x96\x98c\x0c\x05\xa5\x872F\xc7\xf5\x16\xc7N\x86g]D\x1e{\xc8\xb4\xdb\x9f\x9f\xe6|\xc2a\xcc&amp;\xa5$\xea\x13\x00\x109L\xf9}\xc6\x04-q\xa9\xda\xc0i\x12my\x8b\x81\xd0N3\xbb\xa4T\x9d\n\x1b\xacA?\x94\xf4\xf9\x1e\x98\xdd\x00\xab[\x91\x10\x06\xc6m$}\x08\xe7\xf4\x05\xa7\x00_KE\x816 ~\x9bnb\xf8\x10\xb4\x8at\xd5Kh\xf1\x1d\xc0\xb1\xf66\xf9\xdc\x1c\x10\xd2]\x0b\xac\x90\xa1\x81\x10d\xdeF\x91rc\xa8\xfc\xf1\xbc\xa9 \x1d\xa0\x00g\x91\xbf\xdfS\xcb\x05\x98\x06\xc0\x91y"@=@\x8br\xeap$\xee\xdd\xea\xb5UJCI:\x88\x86\x85\x0by\xe4\xd3\xd0\xfe\xb0q\x9aU\x15.\xc5\x80\xdeM\x94\x91#\x9c\x117\xfc\x898\xd9\xabP\xd4\xc1\xb6\x80lHm\xa3\xcb\xa5\xc4\x1c\x19\xacA\x91$I\x06\x01\x10\x06\xddg~Dz`G~\x9cu\xef^w\xa6A'... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg timestamp="20221018 15:42:27.837" level="INFO">POST Response : url=https://api-nodejs-todolist.herokuapp.com/user/me/avatar 
+ status=200, reason=OK 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '15', 'Etag': 'W/"f-Oz+qwQtjJfopOsF/h4wW76Hn9JU"', 'Date': 'Tue, 18 Oct 2022 10:12:27 GMT', 'Via': '1.1 vegur'} 
+ body={"succes":true} 
+ </msg>
+<status status="PASS" starttime="20221018 15:42:24.190" endtime="20221018 15:42:27.837"/>
+</kw>
+<msg timestamp="20221018 15:42:27.837" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:24.190" endtime="20221018 15:42:27.837"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:24.190" endtime="20221018 15:42:27.837"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${body}&quot; != &quot;${EMPTY}&quot;">
+<try>
+<branch type="TRY">
+<kw name="Evaluate" library="BuiltIn">
+<var>${type}</var>
+<arg>isinstance(${body},dict)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:27.838" endtime="20221018 15:42:27.838"/>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>json=${body}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:27.838" endtime="20221018 15:42:27.838"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:27.838" endtime="20221018 15:42:27.838"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>data=${body}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:27.839" endtime="20221018 15:42:27.839"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:27.838" endtime="20221018 15:42:27.839"/>
+</branch>
+<status status="NOT RUN" starttime="20221018 15:42:27.838" endtime="20221018 15:42:27.839"/>
+</try>
+<status status="NOT RUN" starttime="20221018 15:42:27.838" endtime="20221018 15:42:27.839"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:27.839" endtime="20221018 15:42:27.839"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:27.839" endtime="20221018 15:42:27.839"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:24.189" endtime="20221018 15:42:27.839"/>
+</if>
+<msg timestamp="20221018 15:42:27.839" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:24.189" endtime="20221018 15:42:27.839"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20221018 15:42:27.840" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:27.840" endtime="20221018 15:42:27.840"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:24.187" endtime="20221018 15:42:27.840"/>
+</kw>
+<kw name="Validate status code" library="commonKeywords">
+<arg>${success_status_code}</arg>
+<arg>${success_status_message}</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${expected_status_message}</arg>
+<arg>${response.reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20221018 15:42:27.842" endtime="20221018 15:42:27.844"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${expected_status_code}</var>
+<arg>${status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20221018 15:42:27.845" level="INFO">${expected_status_code} = 200</msg>
+<status status="PASS" starttime="20221018 15:42:27.844" endtime="20221018 15:42:27.845"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${expected_status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:27.845" endtime="20221018 15:42:27.846"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:27.846" endtime="20221018 15:42:27.847"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${expected_status_code}</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20221018 15:42:27.847" endtime="20221018 15:42:27.848"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:27.842" endtime="20221018 15:42:27.848"/>
+</kw>
+<kw name="Validate Header" library="commonKeywords">
+<arg>${json_header}</arg>
+<kw name="Get From Dictionary" library="Collections">
+<var>${content_type}</var>
+<arg>${response.headers}</arg>
+<arg>Content-Type</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20221018 15:42:27.851" level="INFO">${content_type} = application/json; charset=utf-8</msg>
+<status status="PASS" starttime="20221018 15:42:27.849" endtime="20221018 15:42:27.851"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${content_type}</arg>
+<arg>${expected_Content-Type}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20221018 15:42:27.851" endtime="20221018 15:42:27.852"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:27.849" endtime="20221018 15:42:27.852"/>
+</kw>
+<kw name="Verifying response time" library="commonKeywords">
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response.elapsed.total_seconds()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:27.853" endtime="20221018 15:42:27.854"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:27.852" endtime="20221018 15:42:27.855"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:24.180" endtime="20221018 15:42:27.855"/>
+</test>
+<test id="s1-t5" name="Validating the API which accepts text method" line="45">
+<kw name="Create Token Dictionary" library="commonKeywords">
+<var>${Headers}</var>
+<arg>${text_header}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{Header}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20221018 15:42:27.863" level="INFO">&amp;{Header} = { }</msg>
+<status status="PASS" starttime="20221018 15:42:27.861" endtime="20221018 15:42:27.863"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${Headers}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>Content-Type</arg>
+<arg>${Headers}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="PASS" starttime="20221018 15:42:27.865" endtime="20221018 15:42:27.865"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:27.865" endtime="20221018 15:42:27.865"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:27.863" endtime="20221018 15:42:27.865"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${token}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>Authorization</arg>
+<arg>Bearer ${TOKEN}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:27.867" endtime="20221018 15:42:27.867"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:27.866" endtime="20221018 15:42:27.867"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:27.865" endtime="20221018 15:42:27.867"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${app_ID}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Set To Dictionary" library="Collections">
+<arg>${Header}</arg>
+<arg>app-id</arg>
+<arg>${app_ID}</arg>
+<doc>Adds the given ``key_value_pairs`` and ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:27.869" endtime="20221018 15:42:27.869"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:27.868" endtime="20221018 15:42:27.869"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:27.867" endtime="20221018 15:42:27.869"/>
+</if>
+<msg timestamp="20221018 15:42:27.869" level="INFO">${Headers} = {'Content-Type': 'text/plain'}</msg>
+<status status="PASS" starttime="20221018 15:42:27.859" endtime="20221018 15:42:27.869"/>
+</kw>
+<kw name="Validate API calls using different method" library="Request_Library">
+<arg>${BASEURL2}</arg>
+<arg>${text_endpoint}</arg>
+<arg>${Post_Method}</arg>
+<arg>body=${update_data}</arg>
+<doc>Validate layer implementation using method</doc>
+<kw name="Hit the api and generating the response" library="Request_Library">
+<var>${response}</var>
+<arg>${BASE_URL}</arg>
+<arg>${ENDPOINT}</arg>
+<arg>${Header}</arg>
+<arg>${METHOD}</arg>
+<arg>${body}</arg>
+<arg>${query_param}</arg>
+<arg>${Form_Data}</arg>
+<arg>${file_type}</arg>
+<if>
+<branch type="IF" condition="&quot;${Form_Data}&quot; != &quot;${EMPTY}&quot;">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>${file_type}=${Form_Data}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:27.877" endtime="20221018 15:42:27.877"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:27.877" endtime="20221018 15:42:27.877"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${body}&quot; != &quot;${EMPTY}&quot;">
+<try>
+<branch type="TRY">
+<kw name="Evaluate" library="BuiltIn">
+<var>${type}</var>
+<arg>isinstance(${body},dict)</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20221018 15:42:27.882" level="FAIL">Evaluating expression 'isinstance(name Abinesh,dict)' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</msg>
+<status status="FAIL" starttime="20221018 15:42:27.879" endtime="20221018 15:42:27.885"/>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>json=${body}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:27.886" endtime="20221018 15:42:27.886"/>
+</kw>
+<status status="FAIL" starttime="20221018 15:42:27.879" endtime="20221018 15:42:27.886"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>data=${body}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="POST" library="RequestsLibrary">
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<arg>data=${body}</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20221018 15:42:29.546" level="INFO">POST Request : url=https://89017a91-5de9-41be-8be9-0281f4a108c8.mock.pstmn.io/2 
+ path_url=/2 
+ headers={'Content-Length': '12'} 
+ body=name Abinesh 
+ </msg>
+<msg timestamp="20221018 15:42:29.546" level="INFO">POST Response : url=https://89017a91-5de9-41be-8be9-0281f4a108c8.mock.pstmn.io/2 
+ status=200, reason=OK 
+ headers={'Date': 'Tue, 18 Oct 2022 10:12:29 GMT', 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '19', 'Connection': 'keep-alive', 'x-srv-trace': 'v=1;t=e9961a12d96cea1b', 'x-srv-span': 'v=1;s=03259a0ce7435732', 'Access-Control-Allow-Origin': '*', 'X-RateLimit-Limit': '120', 'X-RateLimit-Remaining': '119', 'X-RateLimit-Reset': '1666088009', 'ETag': 'W/"13-nwvDiEnOd+bQ4E1fUWNPhkhJTb8"', 'Vary': 'Accept-Encoding'} 
+ body={"name": "Abinesh"} 
+ </msg>
+<status status="PASS" starttime="20221018 15:42:27.886" endtime="20221018 15:42:29.546"/>
+</kw>
+<msg timestamp="20221018 15:42:29.546" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:27.886" endtime="20221018 15:42:29.546"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:27.886" endtime="20221018 15:42:29.546"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:27.879" endtime="20221018 15:42:29.547"/>
+</try>
+<status status="PASS" starttime="20221018 15:42:27.879" endtime="20221018 15:42:29.547"/>
+</branch>
+<branch type="ELSE">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${response}</var>
+<arg>${METHOD}</arg>
+<arg>${BASE_URL}${POST_ENDPOINT}</arg>
+<arg>params=${query_param}</arg>
+<arg>headers=${HEADER}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<status status="NOT RUN" starttime="20221018 15:42:29.547" endtime="20221018 15:42:29.547"/>
+</kw>
+<status status="NOT RUN" starttime="20221018 15:42:29.547" endtime="20221018 15:42:29.547"/>
+</branch>
+<status status="PASS" starttime="20221018 15:42:27.875" endtime="20221018 15:42:29.547"/>
+</if>
+<msg timestamp="20221018 15:42:29.548" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:27.873" endtime="20221018 15:42:29.548"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20221018 15:42:29.549" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20221018 15:42:29.548" endtime="20221018 15:42:29.549"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:27.870" endtime="20221018 15:42:29.550"/>
+</kw>
+<kw name="Validate status code" library="commonKeywords">
+<arg>${success_status_code}</arg>
+<arg>${success_status_message}</arg>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${expected_status_message}</arg>
+<arg>${response.reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20221018 15:42:29.553" endtime="20221018 15:42:29.555"/>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<var>${expected_status_code}</var>
+<arg>${status_code}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<msg timestamp="20221018 15:42:29.556" level="INFO">${expected_status_code} = 200</msg>
+<status status="PASS" starttime="20221018 15:42:29.555" endtime="20221018 15:42:29.556"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${expected_status_code}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:29.556" endtime="20221018 15:42:29.557"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20221018 15:42:29.557" endtime="20221018 15:42:29.558"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${expected_status_code}</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20221018 15:42:29.558" endtime="20221018 15:42:29.558"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:29.551" endtime="20221018 15:42:29.558"/>
+</kw>
+<kw name="Validate Header" library="commonKeywords">
+<arg>${text_content_type}</arg>
+<kw name="Get From Dictionary" library="Collections">
+<var>${content_type}</var>
+<arg>${response.headers}</arg>
+<arg>Content-Type</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20221018 15:42:29.560" level="INFO">${content_type} = text/html; charset=utf-8</msg>
+<status status="PASS" starttime="20221018 15:42:29.559" endtime="20221018 15:42:29.560"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${content_type}</arg>
+<arg>${expected_Content-Type}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20221018 15:42:29.561" endtime="20221018 15:42:29.561"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:29.559" endtime="20221018 15:42:29.561"/>
+</kw>
+<status status="PASS" starttime="20221018 15:42:27.857" endtime="20221018 15:42:29.562"/>
+</test>
+<doc>Abstract layer Implementation of APIs library</doc>
+<status status="PASS" starttime="20221018 15:42:17.460" endtime="20221018 15:42:29.564"/>
+</suite>
+<statistics>
+<total>
+<stat pass="5" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="5" fail="0" skip="0" id="s1" name="Test Api">Test Api</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
